@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Portal | LxA International School</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--primary:#2563EB;
+--secondary:#0F172A;
+--gold:#FBBF24;
+--light:#F8FAFC;
+--text:#1E293B;
+}
+
+body{
+background:var(--light);
+color:var(--text);
+min-height:100vh;
+}
+
+header{
+background:var(--secondary);
+padding:20px 6%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:15px;
+}
+
+.logo{
+font-size:24px;
+font-weight:700;
+color:white;
+}
+
+.logo span{
+color:var(--gold);
+}
+
+.header-right{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+.welcome-text{
+color:#cbd5e1;
+font-size:14px;
+}
+
+.logout-btn{
+padding:10px 22px;
+background:var(--gold);
+color:black;
+border:none;
+border-radius:30px;
+font-family:'Poppins',sans-serif;
+font-weight:600;
+cursor:pointer;
+font-size:14px;
+transition:.3s;
+}
+
+.logout-btn:hover{
+opacity:.85;
+}
+
+main{
+padding:50px 6%;
+max-width:1000px;
+margin:0 auto;
+}
+
+#loadingState{
+text-align:center;
+padding:80px 0;
+color:#666;
+}
+
+.profile-card{
+background:white;
+border-radius:16px;
+padding:30px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+margin-bottom:30px;
+display:none;
+}
+
+.profile-card h2{
+color:var(--secondary);
+margin-bottom:10px;
+}
+
+.profile-meta{
+display:flex;
+gap:30px;
+flex-wrap:wrap;
+color:#666;
+font-size:15px;
+}
+
+.results-section{
+display:none;
+}
+
+.results-section h3{
+color:var(--secondary);
+margin-bottom:20px;
+}
+
+.term-group{
+background:white;
+border-radius:16px;
+padding:25px;
+margin-bottom:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.06);
+}
+
+.term-group h4{
+color:var(--primary);
+margin-bottom:15px;
+font-size:16px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th, td{
+text-align:left;
+padding:12px 10px;
+border-bottom:1px solid #f0f0f0;
+font-size:14px;
+}
+
+th{
+color:#888;
+font-weight:600;
+text-transform:uppercase;
+font-size:12px;
+letter-spacing:.5px;
+}
+
+.no-results{
+text-align:center;
+color:#888;
+padding:40px 0;
+background:white;
+border-radius:16px;
+box-shadow:0 10px 30px rgba(0,0,0,.06);
+}
+
+@media(max-width:600px){
+
+table{
+font-size:13px;
+}
+
+th, td{
+padding:8px 6px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">LxA <span>School</span></div>
+<div class="header-right">
+<span class="welcome-text" id="welcomeText"></span>
+<button class="logout-btn" id="logoutBtn">Log Out</button>
+</div>
+</header>
+
+<main>
+
+<div id="loadingState">Loading your portal...</div>
+
+<div class="profile-card" id="profileCard">
+<h2 id="studentNameDisplay"></h2>
+<div class="profile-meta">
+<span id="studentClassDisplay"></span>
+<span id="studentAdmissionDisplay"></span>
+</div>
+</div>
+
+<div class="results-section" id="resultsSection">
+<h3>Your Results</h3>
+<div id="resultsContainer"></div>
+</div>
+
+</main>
+
+<script>
+
+const SUPABASE_URL="https://mspjjuhoypfearmpqlko.supabase.co";
+const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1zcGpqdWhveXBmZWFybXBxbGtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3MTAwMjQsImV4cCI6MjEwMDI4NjAyNH0.UuieubBSNfX7oGhb6k7w3_8LduWxMzxpGkawrK9OvhI";
+
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const loadingState=document.getElementById("loadingState");
+const profileCard=document.getElementById("profileCard");
+const resultsSection=document.getElementById("resultsSection");
+const resultsContainer=document.getElementById("resultsContainer");
+const welcomeText=document.getElementById("welcomeText");
+
+async function init(){
+
+const { data: { session } } = await sb.auth.getSession();
+
+if(!session){
+
+window.location.href="login.html";
+
+return;
+
+}
+
+const userId=session.user.id;
+
+const { data: profile, error: profileError } = await sb
+
+.from("profiles")
+
+.select("*")
+
+.eq("id", userId)
+
+.single();
+
+if(profileError || !profile || profile.role!=="student"){
+
+// Not a student account — send back to login rather than showing an empty portal
+
+await sb.auth.signOut();
+
+window.location.href="login.html";
+
+return;
+
+}
+
+welcomeText.textContent="Welcome, "+profile.full_name;
+
+document.getElementById("studentNameDisplay").textContent=profile.full_name;
+
+document.getElementById("studentClassDisplay").textContent="Class: "+(profile.class || "—");
+
+document.getElementById("studentAdmissionDisplay").textContent="Admission No: "+(profile.admission_number || "—");
+
+profileCard.style.display="block";
+
+const { data: results, error: resultsError } = await sb
+
+.from("results")
+
+.select("*")
+
+.eq("student_id", userId)
+
+.order("session",{ ascending:false })
+
+.order("term",{ ascending:false });
+
+loadingState.style.display="none";
+
+resultsSection.style.display="block";
+
+if(resultsError || !results || results.length===0){
+
+resultsContainer.innerHTML='<div class="no-results">No results have been published yet. Please check back later.</div>';
+
+return;
+
+}
+
+// Group results by session + term
+
+const groups={};
+
+results.forEach(r=>{
+
+const key=r.session+" — "+r.term;
+
+if(!groups[key]) groups[key]=[];
+
+groups[key].push(r);
+
+});
+
+let html="";
+
+Object.keys(groups).forEach(key=>{
+
+html+='<div class="term-group"><h4>'+key+'</h4><table><thead><tr><th>Subject</th><th>Score</th><th>Grade</th><th>Remark</th></tr></thead><tbody>';
+
+groups[key].forEach(r=>{
+
+html+='<tr><td>'+escapeHtml(r.subject)+'</td><td>'+escapeHtml(String(r.score))+'</td><td>'+escapeHtml(r.grade||"—")+'</td><td>'+escapeHtml(r.remark||"—")+'</td></tr>';
+
+});
+
+html+='</tbody></table></div>';
+
+});
+
+resultsContainer.innerHTML=html;
+
+}
+
+function escapeHtml(str){
+
+const div=document.createElement("div");
+
+div.textContent=str;
+
+return div.innerHTML;
+
+}
+
+document.getElementById("logoutBtn").addEventListener("click", async function(){
+
+await sb.auth.signOut();
+
+window.location.href="login.html";
+
+});
+
+init();
+
+</script>
+
+</body>
+</html>

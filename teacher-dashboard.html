@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Dashboard | LxA International School</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--primary:#2563EB;
+--secondary:#0F172A;
+--gold:#FBBF24;
+--light:#F8FAFC;
+--text:#1E293B;
+}
+
+body{
+background:var(--light);
+color:var(--text);
+min-height:100vh;
+}
+
+header{
+background:var(--secondary);
+padding:20px 6%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:15px;
+}
+
+.logo{
+font-size:24px;
+font-weight:700;
+color:white;
+}
+
+.logo span{
+color:var(--gold);
+}
+
+.header-right{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+.welcome-text{
+color:#cbd5e1;
+font-size:14px;
+}
+
+.logout-btn{
+padding:10px 22px;
+background:var(--gold);
+color:black;
+border:none;
+border-radius:30px;
+font-family:'Poppins',sans-serif;
+font-weight:600;
+cursor:pointer;
+font-size:14px;
+transition:.3s;
+}
+
+.logout-btn:hover{
+opacity:.85;
+}
+
+main{
+padding:40px 6% 80px;
+max-width:1100px;
+margin:0 auto;
+}
+
+#loadingState{
+text-align:center;
+padding:80px 0;
+color:#666;
+}
+
+.panel{
+background:white;
+border-radius:16px;
+padding:30px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+margin-bottom:25px;
+}
+
+.panel h3{
+color:var(--secondary);
+margin-bottom:20px;
+font-size:18px;
+}
+
+.select-wrap select{
+width:100%;
+max-width:320px;
+padding:12px 16px;
+border:1px solid #e2e8f0;
+border-radius:10px;
+font-family:'Poppins',sans-serif;
+font-size:15px;
+background:white;
+}
+
+.student-list{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+gap:14px;
+margin-top:20px;
+}
+
+.student-card{
+border:1px solid #e2e8f0;
+border-radius:12px;
+padding:16px;
+cursor:pointer;
+transition:.25s;
+}
+
+.student-card:hover{
+border-color:var(--primary);
+background:#eff6ff;
+}
+
+.student-card.selected{
+border-color:var(--primary);
+background:#eff6ff;
+}
+
+.student-card h4{
+color:var(--secondary);
+font-size:15px;
+margin-bottom:4px;
+}
+
+.student-card p{
+color:#888;
+font-size:13px;
+}
+
+.empty-note{
+color:#888;
+font-size:14px;
+margin-top:15px;
+}
+
+.results-table-wrap{
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:600px;
+}
+
+th, td{
+text-align:left;
+padding:10px 8px;
+border-bottom:1px solid #f0f0f0;
+font-size:13px;
+}
+
+th{
+color:#888;
+font-weight:600;
+text-transform:uppercase;
+font-size:11px;
+letter-spacing:.5px;
+}
+
+td input{
+width:100%;
+padding:8px 10px;
+border:1px solid #e2e8f0;
+border-radius:6px;
+font-family:'Poppins',sans-serif;
+font-size:13px;
+}
+
+.row-save-btn{
+padding:8px 16px;
+background:var(--primary);
+color:white;
+border:none;
+border-radius:6px;
+font-family:'Poppins',sans-serif;
+font-size:12px;
+font-weight:600;
+cursor:pointer;
+white-space:nowrap;
+}
+
+.row-save-btn:hover{
+background:var(--secondary);
+}
+
+.row-save-btn.saved{
+background:#16a34a;
+}
+
+.add-result-form{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:15px;
+margin-top:10px;
+}
+
+.add-result-form label{
+font-size:13px;
+font-weight:500;
+color:var(--secondary);
+display:block;
+margin-bottom:6px;
+}
+
+.add-result-form input{
+width:100%;
+padding:10px 12px;
+border:1px solid #e2e8f0;
+border-radius:8px;
+font-family:'Poppins',sans-serif;
+font-size:14px;
+}
+
+.add-result-btn{
+grid-column:1/-1;
+padding:13px;
+background:var(--primary);
+color:white;
+border:none;
+border-radius:8px;
+font-family:'Poppins',sans-serif;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+margin-top:5px;
+}
+
+.add-result-btn:hover{
+background:var(--secondary);
+}
+
+.status-msg{
+font-size:13px;
+margin-top:10px;
+display:none;
+}
+
+.status-msg.show{
+display:block;
+}
+
+.status-msg.success{
+color:#166534;
+}
+
+.status-msg.error{
+color:#991b1b;
+}
+
+@media(max-width:600px){
+
+.panel{
+padding:20px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">LxA <span>School</span></div>
+<div class="header-right">
+<span class="welcome-text" id="welcomeText"></span>
+<button class="logout-btn" id="logoutBtn">Log Out</button>
+</div>
+</header>
+
+<main>
+
+<div id="loadingState">Loading dashboard...</div>
+
+<div id="dashboardContent" style="display:none;">
+
+<div class="panel">
+<h3>1. Select a Class</h3>
+<div class="select-wrap">
+<select id="classSelect">
+<option value="">Choose a class...</option>
+</select>
+</div>
+
+<div id="studentListWrap">
+<div class="empty-note">Select a class to see its students.</div>
+</div>
+</div>
+
+<div class="panel" id="studentPanel" style="display:none;">
+<h3 id="selectedStudentName">Student</h3>
+
+<div class="results-table-wrap">
+<table id="existingResultsTable">
+<thead>
+<tr>
+<th>Term</th>
+<th>Session</th>
+<th>Subject</th>
+<th>Score</th>
+<th>Grade</th>
+<th>Remark</th>
+<th></th>
+</tr>
+</thead>
+<tbody id="existingResultsBody"></tbody>
+</table>
+</div>
+<div class="empty-note" id="noResultsNote" style="display:none;">No results entered yet for this student.</div>
+
+<h3 style="margin-top:30px;">Add New Result</h3>
+<form class="add-result-form" id="addResultForm">
+
+<div>
+<label>Term</label>
+<input type="text" id="newTerm" placeholder="e.g. 1st Term" required>
+</div>
+
+<div>
+<label>Session</label>
+<input type="text" id="newSession" placeholder="e.g. 2025/2026" required>
+</div>
+
+<div>
+<label>Subject</label>
+<input type="text" id="newSubject" placeholder="e.g. Mathematics" required>
+</div>
+
+<div>
+<label>Score</label>
+<input type="number" id="newScore" min="0" max="100" required>
+</div>
+
+<div>
+<label>Grade</label>
+<input type="text" id="newGrade" placeholder="e.g. A">
+</div>
+
+<div>
+<label>Remark</label>
+<input type="text" id="newRemark" placeholder="e.g. Excellent">
+</div>
+
+<button type="submit" class="add-result-btn">Add Result</button>
+
+</form>
+
+<div class="status-msg" id="addResultStatus"></div>
+
+</div>
+
+</div>
+
+</main>
+
+<script>
+
+const SUPABASE_URL="https://mspjjuhoypfearmpqlko.supabase.co";
+const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1zcGpqdWhveXBmZWFybXBxbGtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3MTAwMjQsImV4cCI6MjEwMDI4NjAyNH0.UuieubBSNfX7oGhb6k7w3_8LduWxMzxpGkawrK9OvhI";
+
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentTeacherId=null;
+let currentStudentId=null;
+let allStudents=[];
+
+const loadingState=document.getElementById("loadingState");
+const dashboardContent=document.getElementById("dashboardContent");
+const welcomeText=document.getElementById("welcomeText");
+const classSelect=document.getElementById("classSelect");
+const studentListWrap=document.getElementById("studentListWrap");
+const studentPanel=document.getElementById("studentPanel");
+const selectedStudentName=document.getElementById("selectedStudentName");
+const existingResultsBody=document.getElementById("existingResultsBody");
+const noResultsNote=document.getElementById("noResultsNote");
+const addResultForm=document.getElementById("addResultForm");
+const addResultStatus=document.getElementById("addResultStatus");
+
+function escapeHtml(str){
+const div=document.createElement("div");
+div.textContent=str==null?"":str;
+return div.innerHTML;
+}
+
+async function init(){
+
+const { data: { session } } = await sb.auth.getSession();
+
+if(!session){
+window.location.href="login.html";
+return;
+}
+
+const userId=session.user.id;
+
+const { data: profile, error: profileError } = await sb
+.from("profiles")
+.select("*")
+.eq("id", userId)
+.single();
+
+if(profileError || !profile || profile.role!=="teacher"){
+await sb.auth.signOut();
+window.location.href="login.html";
+return;
+}
+
+currentTeacherId=userId;
+welcomeText.textContent="Welcome, "+profile.full_name;
+
+// Load all students up front (class list is derived from this)
+
+const { data: students, error: studentsError } = await sb
+.from("profiles")
+.select("id, full_name, class, admission_number")
+.eq("role","student")
+.order("full_name",{ ascending:true });
+
+loadingState.style.display="none";
+dashboardContent.style.display="block";
+
+if(studentsError || !students){
+studentListWrap.innerHTML='<div class="empty-note">Could not load students. Please refresh and try again.</div>';
+return;
+}
+
+allStudents=students;
+
+const classes=[...new Set(students.map(s=>s.class).filter(Boolean))].sort();
+
+classes.forEach(c=>{
+const opt=document.createElement("option");
+opt.value=c;
+opt.textContent=c;
+classSelect.appendChild(opt);
+});
+
+}
+
+classSelect.addEventListener("change", function(){
+
+studentPanel.style.display="none";
+currentStudentId=null;
+
+const selectedClass=classSelect.value;
+
+if(!selectedClass){
+studentListWrap.innerHTML='<div class="empty-note">Select a class to see its students.</div>';
+return;
+}
+
+const classStudents=allStudents.filter(s=>s.class===selectedClass);
+
+if(classStudents.length===0){
+studentListWrap.innerHTML='<div class="empty-note">No students found in this class yet.</div>';
+return;
+}
+
+let html='<div class="student-list">';
+
+classStudents.forEach(s=>{
+html+='<div class="student-card" data-id="'+s.id+'"><h4>'+escapeHtml(s.full_name)+'</h4><p>Admission No: '+escapeHtml(s.admission_number||"—")+'</p></div>';
+});
+
+html+='</div>';
+
+studentListWrap.innerHTML=html;
+
+document.querySelectorAll(".student-card").forEach(card=>{
+card.addEventListener("click", function(){
+document.querySelectorAll(".student-card").forEach(c=>c.classList.remove("selected"));
+this.classList.add("selected");
+selectStudent(this.getAttribute("data-id"));
+});
+});
+
+});
+
+async function selectStudent(studentId){
+
+currentStudentId=studentId;
+
+const student=allStudents.find(s=>s.id===studentId);
+
+selectedStudentName.textContent=student.full_name+" — "+(student.class||"");
+
+studentPanel.style.display="block";
+
+addResultStatus.classList.remove("show");
+
+addResultForm.reset();
+
+await loadResultsForStudent(studentId);
+
+}
+
+async function loadResultsForStudent(studentId){
+
+const { data: results, error } = await sb
+.from("results")
+.select("*")
+.eq("student_id", studentId)
+.order("session",{ ascending:false })
+.order("term",{ ascending:false });
+
+if(error || !results || results.length===0){
+existingResultsBody.innerHTML="";
+noResultsNote.style.display="block";
+return;
+}
+
+noResultsNote.style.display="none";
+
+existingResultsBody.innerHTML="";
+
+results.forEach(r=>{
+
+const tr=document.createElement("tr");
+
+tr.innerHTML=
+'<td>'+escapeHtml(r.term)+'</td>'+
+'<td>'+escapeHtml(r.session)+'</td>'+
+'<td>'+escapeHtml(r.subject)+'</td>'+
+'<td><input type="number" min="0" max="100" value="'+escapeHtml(r.score)+'" data-field="score"></td>'+
+'<td><input type="text" value="'+escapeHtml(r.grade||"")+'" data-field="grade"></td>'+
+'<td><input type="text" value="'+escapeHtml(r.remark||"")+'" data-field="remark"></td>'+
+'<td><button class="row-save-btn" data-id="'+r.id+'">Save</button></td>';
+
+existingResultsBody.appendChild(tr);
+
+});
+
+document.querySelectorAll(".row-save-btn").forEach(btn=>{
+
+btn.addEventListener("click", async function(){
+
+const row=this.closest("tr");
+const resultId=this.getAttribute("data-id");
+
+const score=row.querySelector('[data-field="score"]').value;
+const grade=row.querySelector('[data-field="grade"]').value;
+const remark=row.querySelector('[data-field="remark"]').value;
+
+this.textContent="Saving...";
+this.disabled=true;
+
+const { error } = await sb
+.from("results")
+.update({ score: Number(score), grade, remark })
+.eq("id", resultId);
+
+this.disabled=false;
+
+if(error){
+this.textContent="Failed";
+console.error("Update error:",error);
+setTimeout(()=>{ this.textContent="Save"; },2000);
+}else{
+this.textContent="Saved";
+this.classList.add("saved");
+setTimeout(()=>{
+this.textContent="Save";
+this.classList.remove("saved");
+},2000);
+}
+
+});
+
+});
+
+}
+
+addResultForm.addEventListener("submit", async function(e){
+
+e.preventDefault();
+
+if(!currentStudentId){
+return;
+}
+
+const submitBtn=addResultForm.querySelector(".add-result-btn");
+const originalText=submitBtn.textContent;
+submitBtn.disabled=true;
+submitBtn.textContent="Adding...";
+
+const payload={
+student_id: currentStudentId,
+term: document.getElementById("newTerm").value,
+session: document.getElementById("newSession").value,
+subject: document.getElementById("newSubject").value,
+score: Number(document.getElementById("newScore").value),
+grade: document.getElementById("newGrade").value || null,
+remark: document.getElementById("newRemark").value || null,
+entered_by: currentTeacherId
+};
+
+const { error } = await sb.from("results").insert(payload);
+
+submitBtn.disabled=false;
+submitBtn.textContent=originalText;
+
+addResultStatus.classList.remove("success","error");
+
+if(error){
+addResultStatus.textContent="Something went wrong adding this result. Please try again.";
+addResultStatus.classList.add("show","error");
+console.error("Insert error:",error);
+return;
+}
+
+addResultStatus.textContent="Result added successfully.";
+addResultStatus.classList.add("show","success");
+
+addResultForm.reset();
+
+await loadResultsForStudent(currentStudentId);
+
+setTimeout(()=>{
+addResultStatus.classList.remove("show");
+},4000);
+
+});
+
+document.getElementById("logoutBtn").addEventListener("click", async function(){
+await sb.auth.signOut();
+window.location.href="login.html";
+});
+
+init();
+
+</script>
+
+</body>
+</html>

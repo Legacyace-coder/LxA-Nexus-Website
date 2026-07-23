@@ -80,6 +80,81 @@ transition:.3s;
 opacity:.85;
 }
 
+.theme-toggle{
+width:38px;
+height:38px;
+border-radius:50%;
+background:rgba(255,255,255,.15);
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+transition:.3s;
+}
+
+.theme-toggle:hover{
+transform:rotate(20deg);
+}
+
+body.dark-mode{
+background:#020617;
+color:#e2e8f0;
+}
+
+body.dark-mode header{
+background:#111827;
+}
+
+body.dark-mode .panel{
+background:#1e293b;
+color:#e2e8f0;
+}
+
+body.dark-mode .panel h3,
+body.dark-mode h4{
+color:white;
+}
+
+body.dark-mode .select-wrap select{
+background:#334155;
+color:white;
+border-color:#475569;
+}
+
+body.dark-mode .student-card{
+border-color:#334155;
+}
+
+body.dark-mode .student-card:hover,
+body.dark-mode .student-card.selected{
+background:#334155;
+border-color:var(--primary);
+}
+
+body.dark-mode .student-card h4{
+color:white;
+}
+
+body.dark-mode th{
+color:#94a3b8;
+}
+
+body.dark-mode td{
+border-bottom-color:#334155;
+}
+
+body.dark-mode td input,
+body.dark-mode .add-result-form input{
+background:#334155;
+color:white;
+border-color:#475569;
+}
+
+body.dark-mode .add-result-form label{
+color:white;
+}
+
 main{
 padding:40px 6% 80px;
 max-width:1100px;
@@ -214,6 +289,31 @@ background:var(--secondary);
 background:#16a34a;
 }
 
+.locked-note{
+color:#94a3b8;
+font-size:12px;
+font-style:italic;
+white-space:nowrap;
+}
+
+.approval-badge{
+padding:4px 10px;
+border-radius:20px;
+font-size:11px;
+font-weight:600;
+white-space:nowrap;
+}
+
+.approval-badge.approved{
+background:#dcfce7;
+color:#166534;
+}
+
+.approval-badge.pending{
+background:#fef3c7;
+color:#92400e;
+}
+
 .add-result-form{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
@@ -291,6 +391,9 @@ padding:20px;
 <div class="logo">LxA <span>School</span></div>
 <div class="header-right">
 <span class="welcome-text" id="welcomeText"></span>
+<div class="theme-toggle" id="themeToggle">
+<i class="fas fa-moon"></i>
+</div>
 <button class="logout-btn" id="logoutBtn">Log Out</button>
 </div>
 </header>
@@ -327,6 +430,7 @@ padding:20px;
 <th>Score</th>
 <th>Grade</th>
 <th>Remark</th>
+<th>Status</th>
 <th></th>
 </tr>
 </thead>
@@ -393,6 +497,33 @@ let currentStudentId=null;
 let allStudents=[];
 
 const loadingState=document.getElementById("loadingState");
+
+// Dark mode (persisted via localStorage — shared across all pages once hosted)
+
+const themeToggle=document.getElementById("themeToggle");
+const themeIcon=themeToggle.querySelector("i");
+
+function applyTheme(isDark){
+document.body.classList.toggle("dark-mode",isDark);
+themeIcon.classList.toggle("fa-moon",!isDark);
+themeIcon.classList.toggle("fa-sun",isDark);
+}
+
+try{
+applyTheme(localStorage.getItem("lxa-theme")==="dark");
+}catch(err){
+console.warn("localStorage unavailable:",err);
+}
+
+themeToggle.addEventListener("click", function(){
+const isDark=!document.body.classList.contains("dark-mode");
+applyTheme(isDark);
+try{
+localStorage.setItem("lxa-theme", isDark?"dark":"light");
+}catch(err){
+console.warn("localStorage unavailable:",err);
+}
+});
 const dashboardContent=document.getElementById("dashboardContent");
 const welcomeText=document.getElementById("welcomeText");
 const classSelect=document.getElementById("classSelect");
@@ -545,6 +676,16 @@ results.forEach(r=>{
 
 const tr=document.createElement("tr");
 
+const isOwn=r.entered_by===currentTeacherId;
+
+const statusBadge=r.approved
+
+? '<span class="approval-badge approved">Approved</span>'
+
+: '<span class="approval-badge pending">Pending Approval</span>';
+
+if(isOwn){
+
 tr.innerHTML=
 '<td>'+escapeHtml(r.term)+'</td>'+
 '<td>'+escapeHtml(r.session)+'</td>'+
@@ -552,7 +693,22 @@ tr.innerHTML=
 '<td><input type="number" min="0" max="100" value="'+escapeHtml(r.score)+'" data-field="score"></td>'+
 '<td><input type="text" value="'+escapeHtml(r.grade||"")+'" data-field="grade"></td>'+
 '<td><input type="text" value="'+escapeHtml(r.remark||"")+'" data-field="remark"></td>'+
+'<td>'+statusBadge+'</td>'+
 '<td><button class="row-save-btn" data-id="'+r.id+'">Save</button></td>';
+
+}else{
+
+tr.innerHTML=
+'<td>'+escapeHtml(r.term)+'</td>'+
+'<td>'+escapeHtml(r.session)+'</td>'+
+'<td>'+escapeHtml(r.subject)+'</td>'+
+'<td>'+escapeHtml(r.score)+'</td>'+
+'<td>'+escapeHtml(r.grade||"—")+'</td>'+
+'<td>'+escapeHtml(r.remark||"—")+'</td>'+
+'<td>'+statusBadge+'</td>'+
+'<td><span class="locked-note">Entered by another teacher</span></td>';
+
+}
 
 existingResultsBody.appendChild(tr);
 
@@ -587,9 +743,8 @@ setTimeout(()=>{ this.textContent="Save"; },2000);
 this.textContent="Saved";
 this.classList.add("saved");
 setTimeout(()=>{
-this.textContent="Save";
-this.classList.remove("saved");
-},2000);
+loadResultsForStudent(currentStudentId);
+},900);
 }
 
 });
@@ -636,7 +791,7 @@ console.error("Insert error:",error);
 return;
 }
 
-addResultStatus.textContent="Result added successfully.";
+addResultStatus.textContent="Result added successfully. It will be visible to the student once approved by an admin.";
 addResultStatus.classList.add("show","success");
 
 addResultForm.reset();
@@ -650,8 +805,17 @@ addResultStatus.classList.remove("show");
 });
 
 document.getElementById("logoutBtn").addEventListener("click", async function(){
-await sb.auth.signOut();
+const btn=this;
+btn.disabled=true;
+btn.textContent="Logging out...";
+const timeout=new Promise(resolve=>setTimeout(resolve,3000));
+try{
+await Promise.race([sb.auth.signOut(), timeout]);
+}catch(err){
+console.error("Sign out error (redirecting anyway):",err);
+}finally{
 window.location.href="login.html";
+}
 });
 
 init();

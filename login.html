@@ -143,10 +143,65 @@ font-size:14px;
 text-decoration:underline;
 }
 
+.theme-toggle{
+position:fixed;
+top:20px;
+right:20px;
+width:42px;
+height:42px;
+border-radius:50%;
+background:rgba(255,255,255,.15);
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+transition:.3s;
+}
+
+.theme-toggle:hover{
+transform:rotate(20deg);
+}
+
+body.dark-mode{
+background:#020617;
+}
+
+body.dark-mode .login-wrap{
+background:#1e293b;
+box-shadow:0 20px 50px rgba(0,0,0,.5);
+}
+
+body.dark-mode .login-logo{
+color:white;
+}
+
+body.dark-mode .login-subtitle{
+color:#94a3b8;
+}
+
+body.dark-mode .form-group label{
+color:white;
+}
+
+body.dark-mode .form-group input{
+background:#334155;
+color:white;
+border-color:#475569;
+}
+
+body.dark-mode .back-link{
+color:var(--gold);
+}
+
 </style>
 </head>
 
 <body>
+
+<div class="theme-toggle" id="themeToggle">
+<i class="fas fa-moon"></i>
+</div>
 
 <div class="login-wrap">
 
@@ -186,6 +241,33 @@ const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const loginForm=document.getElementById("loginForm");
 const loginError=document.getElementById("loginError");
 const loginBtn=document.getElementById("loginBtn");
+
+// Dark mode (persisted via localStorage — shared across all pages once hosted)
+
+const themeToggle=document.getElementById("themeToggle");
+const themeIcon=themeToggle.querySelector("i");
+
+function applyTheme(isDark){
+document.body.classList.toggle("dark-mode",isDark);
+themeIcon.classList.toggle("fa-moon",!isDark);
+themeIcon.classList.toggle("fa-sun",isDark);
+}
+
+try{
+applyTheme(localStorage.getItem("lxa-theme")==="dark");
+}catch(err){
+console.warn("localStorage unavailable:",err);
+}
+
+themeToggle.addEventListener("click", function(){
+const isDark=!document.body.classList.contains("dark-mode");
+applyTheme(isDark);
+try{
+localStorage.setItem("lxa-theme", isDark?"dark":"light");
+}catch(err){
+console.warn("localStorage unavailable:",err);
+}
+});
 
 // If already logged in, skip straight to the right dashboard
 

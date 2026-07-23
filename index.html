@@ -288,8 +288,40 @@ nav a:hover::after{
 width:100%;
 }
 
-nav ul li:last-child{
+nav ul li.mobile-only-btn{
 display:none;
+}
+
+.header-buttons{
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.login-btn{
+padding:12px 26px;
+background:transparent;
+border:2px solid white;
+color:white;
+border-radius:40px;
+text-decoration:none;
+font-weight:600;
+transition:.4s;
+}
+
+.login-btn:hover{
+background:white;
+color:var(--secondary);
+}
+
+header.scrolled .login-btn{
+color:var(--primary);
+border-color:var(--primary);
+}
+
+header.scrolled .login-btn:hover{
+background:var(--primary);
+color:white;
 }
 
 .btn{
@@ -427,7 +459,7 @@ padding:20px 0;
 width:100%;
 }
 
-nav ul li:last-child{
+nav ul li.mobile-only-btn{
 display:list-item;
 }
 
@@ -440,18 +472,20 @@ header.scrolled nav a{
 color:white;
 }
 
-nav ul li:last-child a{
+.login-mobile-btn a{
 display:inline-block;
-background:var(--gold);
-color:black;
-padding:12px 28px;
+background:transparent;
+border:2px solid white;
+color:white;
+padding:10px 26px;
 border-radius:40px;
 font-weight:600;
 font-size:16px;
 }
 
-header.scrolled nav ul li:last-child a{
-color:black;
+header.scrolled .login-mobile-btn a{
+color:white;
+border-color:white;
 }
 
 header{
@@ -463,7 +497,7 @@ display:block;
 z-index:1002;
 }
 
-header .btn{
+header .login-btn{
 display:none;
 }
 
@@ -1238,15 +1272,17 @@ LxA <span>School</span>
 
 <li><a href="#contact-section" class="nav-link">Contact</a></li>
 
-<li><a href="login.html" class="nav-link">Student Login</a></li>
-
-<li><a href="#admissions-section" class="nav-link">Apply Now</a></li>
+<li class="mobile-only-btn login-mobile-btn"><a href="login.html" class="nav-link">Login</a></li>
 
 </ul>
 
 </nav>
 
-<a href="#admissions-section" class="btn">Apply Now</a>
+<div class="header-buttons">
+
+<a href="login.html" class="login-btn">Login</a>
+
+</div>
 
 <div class="theme-toggle" id="themeToggle">
 

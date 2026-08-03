@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 512 512">
+
+  <defs>
+
+    <linearGradient id="gold"
+        x1="0%" y1="0%"
+        x2="100%" y2="100%">
+
+      <stop offset="0%" stop-color="#F7E27E"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#9C7A16"/>
+
+    </linearGradient>
+
+    <filter id="glow">
+
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+
+    </filter>
+
+  </defs>
+
+  <!-- Outer Ring -->
+  <circle
+      cx="256"
+      cy="256"
+      r="210"
+      fill="none"
+      stroke="url(#gold)"
+      stroke-width="12"
+      filter="url(#glow)"/>
+
+  <!-- Inner Ring -->
+  <circle
+      cx="256"
+      cy="256"
+      r="175"
+      fill="none"
+      stroke="#D4AF37"
+      stroke-width="2"
+      opacity=".35"/>
+
+  <!-- L -->
+  <path
+      d="M170 150
+         V340
+         H235"
+      fill="none"
+      stroke="url(#gold)"
+      stroke-width="18"
+      stroke-linecap="round"
+      stroke-linejoin="round"/>
+
+  <!-- X -->
+  <path
+      d="M220 170
+         L292 342
+
+         M292 170
+         L220 342"
+      fill="none"
+      stroke="url(#gold)"
+      stroke-width="18"
+      stroke-linecap="round"/>
+
+  <!-- A -->
+  <path
+      d="M325 340
+         L370 170
+         L415 340
+
+         M338 285
+         H402"
+      fill="none"
+      stroke="url(#gold)"
+      stroke-width="18"
+      stroke-linecap="round"
+      stroke-linejoin="round"/>
+
+</svg>

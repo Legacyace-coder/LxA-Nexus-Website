@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Replace with your actual live domain once you have one
+Sitemap: https://lxanexus.com/sitemap.xml

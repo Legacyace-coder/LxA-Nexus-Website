@@ -80,7 +80,7 @@ if (menuBtn && navbar && navLinks) {
 // Page-switching for About / Projects / Contact —
 // these open as standalone pages (everything else hidden, view resets to top).
 // Home, Services, and Process stay together as the main scrolling page.
-const MAIN_VIEW_IDS = ['home', 'services', 'process', 'testimonials'];
+const MAIN_VIEW_IDS = ['home', 'services', 'process', 'testimonials', 'faq'];
 const STANDALONE_IDS = ['about', 'projects', 'contact'];
 const ALL_VIEW_IDS = [...MAIN_VIEW_IDS, ...STANDALONE_IDS];
 

@@ -77,6 +77,7 @@ h1, h2, h3, .logo {
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 img, i { display: inline-block; }
+picture { display: contents; }
 button, input, select, textarea { font-family: var(--font-body); }
 
 :focus-visible {
@@ -249,6 +250,8 @@ header.scrolled {
 .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 
 .nav-cta { padding: 10px 22px; font-size: 0.9rem; }
+
+.nav-cta-mobile-item { display: none; }
 
 .theme-toggle {
   width: 40px;
@@ -823,6 +826,62 @@ header.scrolled {
 
 .project-card p { color: var(--text-dim); font-size: 0.92rem; }
 
+.case-study {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.case-study summary {
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gold);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.case-study summary::-webkit-details-marker { display: none; }
+
+.case-study summary::after {
+  content: '\2192';
+  transition: transform 0.2s ease;
+}
+
+.case-study[open] summary::after { transform: rotate(90deg); }
+
+.case-study-body {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.case-study-block p,
+.case-study-block ul {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.case-study-block ul { padding-left: 18px; }
+.case-study-block li { margin-bottom: 6px; }
+
+.case-label {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.case-label.before { color: var(--danger); }
+.case-label.after { color: var(--success); }
+
 /* Contact */
 .contact-inner {
   max-width: 1100px;
@@ -1029,6 +1088,13 @@ header.scrolled {
   margin-bottom: 22px;
 }
 
+.success-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
 /* Start a Project modal */
 .modal-overlay {
   display: none;
@@ -1154,6 +1220,30 @@ footer {
 .footer-links a:hover { color: var(--accent); }
 
 .footer-copy { color: var(--text-dim); font-size: 0.85rem; width: 100%; text-align: center; margin-top: 30px; }
+.footer-copy a { color: var(--text-dim); text-decoration: underline; text-underline-offset: 3px; }
+.footer-copy a:hover { color: var(--gold); }
+
+/* Privacy policy page */
+.privacy-content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.privacy-content h3 {
+  font-size: 1.1rem;
+  margin-top: 32px;
+  margin-bottom: 10px;
+}
+
+.privacy-content h3:first-child { margin-top: 0; }
+
+.privacy-content p {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+.privacy-content a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
@@ -1224,6 +1314,9 @@ footer {
 
   .nav-cta { display: none; }
   .menu-btn { display: block; }
+
+  .nav-cta-mobile-item { display: block; margin-top: 8px; }
+  .nav-cta-mobile { width: 100%; }
 
   .service-row { flex-direction: column; gap: 12px; }
   .service-body { gap: 16px; }

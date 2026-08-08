@@ -46,20 +46,21 @@ const menuBtn = document.querySelector('.menu-btn');
 const navbar = document.querySelector('.navbar');
 const navLinks = document.querySelector('.nav-links');
 
+const closeMobileMenu = () => {
+  if (!navbar || !menuBtn) return;
+  navbar.classList.remove('active');
+  document.body.classList.remove('nav-open');
+  menuBtn.setAttribute('aria-expanded', 'false');
+  const icon = menuBtn.querySelector('i');
+  if (icon) {
+    icon.classList.add('fa-bars');
+    icon.classList.remove('fa-xmark');
+  }
+};
+
 if (menuBtn && navbar && navLinks) {
   menuBtn.setAttribute('aria-expanded', 'false');
   menuBtn.setAttribute('aria-label', 'Toggle navigation menu');
-
-  const closeMenu = () => {
-    navbar.classList.remove('active');
-    document.body.classList.remove('nav-open');
-    menuBtn.setAttribute('aria-expanded', 'false');
-    const icon = menuBtn.querySelector('i');
-    if (icon) {
-      icon.classList.add('fa-bars');
-      icon.classList.remove('fa-xmark');
-    }
-  };
 
   menuBtn.addEventListener('click', () => {
     const isOpen = navbar.classList.toggle('active');
@@ -73,7 +74,7 @@ if (menuBtn && navbar && navLinks) {
   });
 
   navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', closeMenu);
+    link.addEventListener('click', closeMobileMenu);
   });
 }
 
@@ -81,7 +82,7 @@ if (menuBtn && navbar && navLinks) {
 // these open as standalone pages (everything else hidden, view resets to top).
 // Home, Services, and Process stay together as the main scrolling page.
 const MAIN_VIEW_IDS = ['home', 'services', 'process', 'testimonials', 'faq'];
-const STANDALONE_IDS = ['about', 'projects', 'contact'];
+const STANDALONE_IDS = ['about', 'projects', 'contact', 'privacy'];
 const ALL_VIEW_IDS = [...MAIN_VIEW_IDS, ...STANDALONE_IDS];
 
 const showMainView = () => {
@@ -120,12 +121,34 @@ const showStandalonePage = (targetId) => {
 // this just keeps things consistent if markup and script ever drift apart).
 showMainView();
 
+// If the page was loaded with a hash already in the URL (a bookmark, a shared link,
+// or a refresh while on a standalone page), route to it immediately instead of
+// silently falling back to the homepage.
+(function routeInitialHash() {
+  const initialId = window.location.hash.slice(1);
+  if (!initialId || !ALL_VIEW_IDS.includes(initialId)) return;
+
+  if (STANDALONE_IDS.includes(initialId)) {
+    showStandalonePage(initialId);
+    window.scrollTo(0, 0);
+  } else {
+    requestAnimationFrame(() => {
+      const target = document.getElementById(initialId);
+      if (target) target.scrollIntoView({ behavior: 'auto', block: 'start' });
+    });
+  }
+})();
+
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', (e) => {
     const targetId = link.getAttribute('href').slice(1);
     if (!ALL_VIEW_IDS.includes(targetId)) return;
 
     e.preventDefault();
+
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, '', `#${targetId}`);
+    }
 
     if (STANDALONE_IDS.includes(targetId)) {
       showStandalonePage(targetId);
@@ -168,15 +191,10 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 // (different ids so they don't collide), wired up identically here.
 const BOOKING_EMAIL = 'acenobs@gmail.com';
 
-// Passes a visitor's name/email to Tawk once they've given it to us via a form,
-// so if they later open chat they aren't asked for it again. Uses setAttributes
-// (the documented way to attach visitor info after the widget has already loaded —
-// Tawk_API.visitor only works if set *before* the embed script runs, which doesn't
-// fit this flow since the visitor may fill the form long after page load).
-function syncTawkVisitor(name, email) {
-  if (typeof Tawk_API === 'undefined' || !Tawk_API.setAttributes) return;
-  Tawk_API.setAttributes({ name, email }, function (error) {});
-}
+// Get a free access key at https://web3forms.com (just an email signup, no domain
+// verification needed) and paste it below. Until you do, submissions automatically
+// fall back to opening the visitor's email app instead — same as before.
+const WEB3FORMS_ACCESS_KEY = '9fc1de5d-1586-4a6e-b0f7-18298ce7730c';
 
 // Service checkboxes reveal their own detail textarea when checked
 document.querySelectorAll('.service-checkbox input[type="checkbox"]').forEach(checkbox => {
@@ -192,6 +210,23 @@ function initProjectForm(formEl) {
   const wrapper = formEl.closest('.project-form-wrapper');
   const statusEl = formEl.querySelector('.form-status');
   const successEl = wrapper ? wrapper.querySelector('.form-success') : null;
+  const submitBtn = formEl.querySelector('button[type="submit"]');
+
+  const showSuccess = () => {
+    if (successEl) {
+      formEl.hidden = true;
+      successEl.hidden = false;
+    } else if (statusEl) {
+      statusEl.classList.remove('error');
+      statusEl.textContent = "Thanks — we'll get back to you within 24 hours to talk more.";
+    }
+  };
+
+  const sendViaMailto = (subject, body) => {
+    const mailtoLink = `mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
+    showSuccess();
+  };
 
   formEl.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -226,8 +261,6 @@ function initProjectForm(formEl) {
     const email = getValue('email');
     const message = getValue('message');
 
-    syncTawkVisitor(name, email);
-
     const serviceLines = checkedServices.map(checkbox => {
       const detail = formEl.querySelector(`.service-detail[data-slug="${checkbox.dataset.slug}"]`);
       const detailText = detail && detail.value.trim() ? detail.value.trim() : 'No details provided';
@@ -242,20 +275,44 @@ function initProjectForm(formEl) {
 
     if (message) body += `\n\nAdditional notes:\n${message}`;
 
-    const mailtoLink = `mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
     if (statusEl) statusEl.classList.remove('error');
 
-    window.location.href = mailtoLink;
-
-    // Show the success panel optimistically — mailto has no reliable "sent" event,
-    // so this reflects that the email client has been handed off, not a delivery guarantee.
-    if (successEl) {
-      formEl.hidden = true;
-      successEl.hidden = false;
-    } else if (statusEl) {
-      statusEl.textContent = "Thanks — we'll get back to you within 24 hours to talk more.";
+    // No access key set up yet — go straight to the mailto fallback rather than
+    // firing a request that will just fail with a placeholder key.
+    if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === 'YOUR_WEB3FORMS_ACCESS_KEY') {
+      sendViaMailto(subject, body);
+      return;
     }
+
+    if (submitBtn) submitBtn.disabled = true;
+    if (statusEl) statusEl.textContent = 'Sending…';
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: subject,
+        from_name: name,
+        email: email,
+        message: body
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (submitBtn) submitBtn.disabled = false;
+        if (data.success) {
+          showSuccess();
+        } else {
+          // Request reached Web3Forms but it rejected it — fall back rather than leave the visitor stuck.
+          sendViaMailto(subject, body);
+        }
+      })
+      .catch(() => {
+        // Network error, blocked request, etc. — fall back to mailto so the visitor still has a path through.
+        if (submitBtn) submitBtn.disabled = false;
+        sendViaMailto(subject, body);
+      });
   });
 }
 
@@ -265,10 +322,12 @@ initProjectForm(document.getElementById('modal-form'));
 // Start a Project modal open/close
 const projectModal = document.getElementById('project-modal');
 const startProjectBtn = document.getElementById('start-project-btn');
+const startProjectBtnMobile = document.getElementById('start-project-btn-mobile');
 const modalCloseBtn = document.getElementById('modal-close-btn');
 
-if (projectModal && startProjectBtn) {
+if (projectModal && (startProjectBtn || startProjectBtnMobile)) {
   const openModal = () => {
+    closeMobileMenu();
     projectModal.classList.add('open');
     document.body.classList.add('modal-open');
     const firstField = projectModal.querySelector('input, textarea, select');
@@ -278,10 +337,11 @@ if (projectModal && startProjectBtn) {
   const closeModal = () => {
     projectModal.classList.remove('open');
     document.body.classList.remove('modal-open');
-    startProjectBtn.focus();
+    if (startProjectBtn) startProjectBtn.focus();
   };
 
-  startProjectBtn.addEventListener('click', openModal);
+  if (startProjectBtn) startProjectBtn.addEventListener('click', openModal);
+  if (startProjectBtnMobile) startProjectBtnMobile.addEventListener('click', openModal);
 
   if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
 
@@ -291,19 +351,6 @@ if (projectModal && startProjectBtn) {
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && projectModal.classList.contains('open')) closeModal();
-  });
-}
-
-// Floating "Chat With Us" button — opens the Tawk.to chat widget
-const chatBtn = document.getElementById('chat-btn');
-if (chatBtn) {
-  chatBtn.addEventListener('click', () => {
-    if (typeof Tawk_API !== 'undefined' && Tawk_API.maximize) {
-      Tawk_API.maximize();
-    } else {
-      // Tawk hasn't finished loading yet (slow connection, blocked script, etc.) — fall back to a direct call.
-      window.location.href = 'tel:+2347025693604';
-    }
   });
 }
 

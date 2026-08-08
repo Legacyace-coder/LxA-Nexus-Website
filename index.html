@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DSV3DSLDFQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DSV3DSLDFQ');
+</script>
+
 <title>LxA Nexus | Building the Future Through Technology</title>
 
 <meta name="description" content="LxA Nexus is a modern technology company providing Web Development, Web Programming Training, Cybersecurity, Cloud Solutions, AI, and IT Consulting.">
@@ -68,8 +77,14 @@
 
 <!-- Loader -->
 <div id="loader">
+    <picture>
+    <source srcset="assets/logo-full.webp" type="image/webp">
     <img src="assets/logo-full.png" alt="LxA Nexus" class="loader-logo-full theme-logo-dark">
+    </picture>
+    <picture>
+    <source srcset="assets/logo-full-light.webp" type="image/webp">
     <img src="assets/logo-full-light.png" alt="LxA Nexus" class="loader-logo-full theme-logo-light">
+    </picture>
     <div class="loader-ring"></div>
 </div>
 
@@ -79,8 +94,14 @@
 <nav class="navbar">
 
 <a href="#home" class="logo">
+<picture>
+<source srcset="assets/logo-full.webp" type="image/webp">
 <img src="assets/logo-full.png" alt="LxA Nexus" class="logo-full-img theme-logo-dark">
+</picture>
+<picture>
+<source srcset="assets/logo-full-light.webp" type="image/webp">
 <img src="assets/logo-full-light.png" alt="LxA Nexus" class="logo-full-img theme-logo-light">
+</picture>
 </a>
 
 <ul class="nav-links">
@@ -89,13 +110,11 @@
 
 <li><a href="#about">About</a></li>
 
-<li><a href="#services">Services</a></li>
-
-<li><a href="#process">Process</a></li>
-
-<li><a href="#projects">Projects</a></li>
-
 <li><a href="#contact">Contact</a></li>
+
+<li class="nav-cta-mobile-item">
+<button type="button" id="start-project-btn-mobile" class="btn primary nav-cta-mobile">Start a Project</button>
+</li>
 
 </ul>
 
@@ -390,6 +409,33 @@ Our Projects
 <h3>LxA Associates</h3>
 <span class="tag">Law Firm Website</span>
 <p>A polished marketing site for a Lagos-based law firm, with dark mode and layered visual storytelling.</p>
+
+<details class="case-study">
+<summary>View case study</summary>
+<div class="case-study-body">
+
+<div class="case-study-block">
+<span class="case-label before">Before</span>
+<p>The firm was operating under an older brand name with a basic web presence that didn't reflect the level of the practice — no blog, no clear way for prospective clients to understand the practice areas or get in touch.</p>
+</div>
+
+<div class="case-study-block">
+<span class="case-label after">After</span>
+<p>A full rebrand paired with a polished, single-page site: dark themed, with dedicated overlay pages for About, Blog, and Contact, practice-area breakdowns, and a proper inquiry flow.</p>
+</div>
+
+<div class="case-study-block">
+<span class="case-label">What we did</span>
+<ul>
+<li>Full brand refresh, including a new name and identity</li>
+<li>Custom dark-mode design with animated overlay navigation</li>
+<li>Blog section for published articles and firm updates</li>
+<li>Practice area pages and a structured contact/inquiry flow</li>
+</ul>
+</div>
+
+</div>
+</details>
 </div>
 
 <div class="project-card">
@@ -397,6 +443,33 @@ Our Projects
 <h3>LxA International School</h3>
 <span class="tag">School Management System</span>
 <p>A multi-portal platform for students, teachers, and admins, with secure authentication and role-based access.</p>
+
+<details class="case-study">
+<summary>View case study</summary>
+<div class="case-study-body">
+
+<div class="case-study-block">
+<span class="case-label before">Before</span>
+<p>The school had no centralized system for managing student results or applications — everything ran on manual, disconnected processes with no self-service portal for staff, students, or applicants.</p>
+</div>
+
+<div class="case-study-block">
+<span class="case-label after">After</span>
+<p>A marketing site backed by a full management system: separate portals for admins, teachers, and students, with results, applications, and account management all handled securely in one place.</p>
+</div>
+
+<div class="case-study-block">
+<span class="case-label">What we did</span>
+<ul>
+<li>Public-facing school website with animated stats and a modern layout</li>
+<li>Supabase-backed system across five portal pages</li>
+<li>Role-based access control so each user type sees only what they should</li>
+<li>Secure account management, including an edge function for handling account actions</li>
+</ul>
+</div>
+
+</div>
+</details>
 </div>
 
 <div class="project-card">
@@ -404,6 +477,32 @@ Our Projects
 <h3>Retail AI Assistant</h3>
 <span class="tag">AI Shopping Assistant</span>
 <p>A custom AI shopping assistant for an online clothing store, guiding customers from browsing to checkout.</p>
+
+<details class="case-study">
+<summary>View case study</summary>
+<div class="case-study-body">
+
+<div class="case-study-block">
+<span class="case-label before">Before</span>
+<p>Customers browsing the store had no way to get quick answers about stock, sizing, or recommendations — just a static catalog with no guidance in between browsing and checkout.</p>
+</div>
+
+<div class="case-study-block">
+<span class="case-label after">After</span>
+<p>A custom AI assistant built directly against the store's live product data, helping customers find what they need and pushing them toward checkout instead of dropping off mid-browse.</p>
+</div>
+
+<div class="case-study-block">
+<span class="case-label">What we did</span>
+<ul>
+<li>Custom AI assistant integrated with the store's live product database</li>
+<li>Real-time stock checking and product lookup</li>
+<li>Personalized recommendations based on what the customer's looking for</li>
+</ul>
+</div>
+
+</div>
+</details>
 </div>
 
 </div>
@@ -616,12 +715,47 @@ Our Projects
 <i class="fa-solid fa-circle-check"></i>
 <h3>Thanks — you're all set!</h3>
 <p>We'll get back to you within 24 hours to talk more.</p>
+<div class="success-actions">
 <a href="tel:+2347025693604" class="btn primary">
 <i class="fa-solid fa-phone"></i> Call Us Now
 </a>
+<a href="https://calendly.com/acenobs" target="_blank" rel="noopener" class="btn secondary">
+<i class="fa-solid fa-calendar-days"></i> Or Book an Appointment
+</a>
+</div>
 </div>
 
 </div>
+
+</div>
+
+</section>
+
+<!-- Privacy Policy Section -->
+<section class="privacy page-hidden" id="privacy">
+
+<div class="section-heading">
+<span class="eyebrow">Legal</span>
+<h2>Privacy Policy</h2>
+<p>Last updated: August 2026</p>
+</div>
+
+<div class="privacy-content">
+
+<h3>What we collect</h3>
+<p>When you use the "Start a Project" form or the Contact page, we collect the name, email, service selections, and any details you type in. That information is sent to us securely through Web3Forms, a third-party form delivery service, so it reaches our inbox directly. If that delivery ever fails, your email app opens instead with the message pre-filled so you can send it yourself. Either way, we only receive what you choose to submit — nothing is collected as you type.</p>
+
+<h3>Cookies and local storage</h3>
+<p>We use your browser's local storage for one thing only: remembering whether you prefer light or dark mode. It doesn't track you and isn't shared with anyone. Third-party tools we use (like Web3Forms, Google Analytics, or Calendly, if you use those features) may set their own cookies under their own policies.</p>
+
+<h3>Analytics</h3>
+<p>We use Google Analytics to understand how many people visit the site and which pages they use, so we can improve it. This is aggregate usage data, not individual tracking tied to your identity. You can read Google's own policy at <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.</p>
+
+<h3>Third-party services</h3>
+<p>Parts of this site rely on third-party services — including Web3Forms for delivering form submissions, Calendly for scheduling calls, and Google Analytics for site usage data. Each operates under its own privacy policy: <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">Web3Forms</a>, <a href="https://calendly.com/privacy" target="_blank" rel="noopener">Calendly</a>, and <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google</a>.</p>
+
+<h3>Contact us about privacy</h3>
+<p>If you have questions about this policy or want any information you've sent us removed, reach out through the Contact page or the phone number in the footer.</p>
 
 </div>
 
@@ -633,8 +767,14 @@ Our Projects
 <div class="footer-inner">
 
 <div class="footer-brand">
+<picture>
+<source srcset="assets/logo-full.webp" type="image/webp">
 <img src="assets/logo-full.png" alt="LxA Nexus" class="footer-logo-full theme-logo-dark">
+</picture>
+<picture>
+<source srcset="assets/logo-full-light.webp" type="image/webp">
 <img src="assets/logo-full-light.png" alt="LxA Nexus" class="footer-logo-full theme-logo-light">
+</picture>
 <div class="footer-tagline">
 <p class="tagline-primary">Connect · Build · Secure · Elevate</p>
 <p class="tagline-secondary">Building the future through technology.</p>
@@ -651,7 +791,7 @@ Our Projects
 </div>
 
 <div class="footer-copy">
-&copy; <span id="year"></span> LxA Nexus. All rights reserved.
+&copy; <span id="year"></span> LxA Nexus. All rights reserved. &middot; <a href="#privacy">Privacy Policy</a>
 </div>
 
 </div>
@@ -761,9 +901,14 @@ Our Projects
 <i class="fa-solid fa-circle-check"></i>
 <h3>Thanks — you're all set!</h3>
 <p>We'll get back to you within 24 hours to talk more.</p>
+<div class="success-actions">
 <a href="tel:+2347025693604" class="btn primary">
 <i class="fa-solid fa-phone"></i> Call Us Now
 </a>
+<a href="https://calendly.com/acenobs" target="_blank" rel="noopener" class="btn secondary">
+<i class="fa-solid fa-calendar-days"></i> Or Book an Appointment
+</a>
+</div>
 </div>
 
 </div>
@@ -771,11 +916,11 @@ Our Projects
 </div>
 </div>
 
-<!-- Persistent Chat / Call bar — stays visible on every view -->
+<!-- Persistent Book an Appointment / Call bar -->
 <div class="floating-cta">
-<button type="button" id="chat-btn" class="btn primary floating-book">
-<i class="fa-solid fa-comments"></i> Chat With Us
-</button>
+<a href="https://calendly.com/acenobs" target="_blank" rel="noopener" class="btn primary floating-book">
+<i class="fa-solid fa-calendar-days"></i> Book an Appointment
+</a>
 <a href="tel:+2347025693604" class="btn call-btn floating-call" aria-label="Call us directly">
 <i class="fa-solid fa-phone"></i>
 </a>
@@ -783,26 +928,14 @@ Our Projects
 
 <script src="script.js"></script>
 
-<!--Start of Tawk.to Script-->
+<!-- Tawk.to live chat — removed for now. To bring it back, restore this block:
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 Tawk_API.onLoad = function(){
-  // Custom "Chat With Us" button replaces Tawk's own launcher
-  Tawk_API.hideWidget();
-
-  // Tags every chat with where it came from — visible in your Tawk dashboard.
-  // Note: the actual auto-greeting popup text is a dashboard setting, not something
-  // this script can set — configure it under Tawk dashboard → Overview → your widget →
-  // "Greeting message" (or Administration → Shortcuts for canned opening messages).
   Tawk_API.setAttributes({
     'source': 'LxA Nexus Website'
   }, function(error){});
 };
-
-// Tawk tends to bring its own bubble back after a chat is minimized or closed —
-// re-hide it every time so our custom button stays the only entry point.
-Tawk_API.onChatMinimized = function(){ Tawk_API.hideWidget(); };
-Tawk_API.onChatHidden = function(){ Tawk_API.hideWidget(); };
 (function(){
 var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
 s1.async=true;
@@ -812,7 +945,8 @@ s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
-<!--End of Tawk.to Script-->
+-->
+
 
 </body>
 </html>

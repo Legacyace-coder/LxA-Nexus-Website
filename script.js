@@ -81,7 +81,7 @@ if (menuBtn && navbar && navLinks) {
 // Page-switching for About / Projects / Contact —
 // these open as standalone pages (everything else hidden, view resets to top).
 // Home, Services, and Process stay together as the main scrolling page.
-const MAIN_VIEW_IDS = ['home', 'services', 'process', 'testimonials', 'faq'];
+const MAIN_VIEW_IDS = ['home', 'services', 'training', 'process', 'testimonials', 'faq'];
 const STANDALONE_IDS = ['about', 'projects', 'contact', 'privacy'];
 const ALL_VIEW_IDS = [...MAIN_VIEW_IDS, ...STANDALONE_IDS];
 
@@ -263,7 +263,23 @@ function initProjectForm(formEl) {
 
     const serviceLines = checkedServices.map(checkbox => {
       const detail = formEl.querySelector(`.service-detail[data-slug="${checkbox.dataset.slug}"]`);
-      const detailText = detail && detail.value.trim() ? detail.value.trim() : 'No details provided';
+      let detailText = 'No details provided';
+
+      if (checkbox.dataset.slug === 'training' && detail) {
+        const packages = Array.from(
+          detail.querySelectorAll('input[name="training-package"]:checked')
+        ).map(pkg => pkg.value);
+        const notesField = detail.querySelector('textarea');
+        const notes = notesField && notesField.value.trim() ? notesField.value.trim() : '';
+
+        const parts = [];
+        if (packages.length) parts.push(`Package(s): ${packages.join(', ')}`);
+        if (notes) parts.push(`Notes: ${notes}`);
+        if (parts.length) detailText = parts.join(' | ');
+      } else if (detail && detail.value && detail.value.trim()) {
+        detailText = detail.value.trim();
+      }
+
       return `- ${checkbox.value}: ${detailText}`;
     }).join('\n');
 
@@ -351,6 +367,30 @@ if (projectModal && (startProjectBtn || startProjectBtnMobile)) {
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && projectModal.classList.contains('open')) closeModal();
+  });
+
+  // "Choose This Package" cards in the public Training showcase —
+  // pre-select the training service and that specific package, then open the modal.
+  document.querySelectorAll('.choose-package-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const trainingCheckbox = document.getElementById('modal-svc-training');
+      const packageRadio = document.getElementById(`modal-${btn.dataset.package}`);
+
+      if (trainingCheckbox && !trainingCheckbox.checked) {
+        trainingCheckbox.checked = true;
+        trainingCheckbox.dispatchEvent(new Event('change'));
+      }
+      if (packageRadio) packageRadio.checked = true;
+
+      openModal();
+
+      if (packageRadio) {
+        requestAnimationFrame(() => {
+          const optionCard = packageRadio.closest('.service-option');
+          if (optionCard) optionCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      }
+    });
   });
 }
 

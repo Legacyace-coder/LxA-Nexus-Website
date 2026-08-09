@@ -118,6 +118,7 @@
 
 </ul>
 
+<div class="nav-actions">
 <button type="button" id="start-project-btn" class="btn primary nav-cta">Start a Project</button>
 
 <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light and dark mode">
@@ -127,6 +128,7 @@
 <button type="button" class="menu-btn">
 <i class="fas fa-bars"></i>
 </button>
+</div>
 
 </nav>
 
@@ -265,15 +267,15 @@ Our Projects
 
 </div>
 
-<!-- Founder bio — draft copy, personalize freely (photo, exact wording, career details) -->
+<!-- Founder bio -->
 <div class="founder-block">
 
-<div class="founder-avatar"><i class="fa-solid fa-user"></i></div>
+<img src="assets/founder-photo.jpg" alt="Nnatu Promise C. (Legacy), founder of LxA Nexus" class="founder-avatar">
 
 <div class="founder-info">
 <span class="eyebrow">The Person Behind It</span>
 <h3>Hi, I'm Legacy</h3>
-<p>I started LxA Nexus because I wanted a studio where the person who talks to you about your project is the same person who builds it — no handoffs, no account managers relaying messages. Based in Lagos, I work across web development, security, cloud, and AI, and I teach the same skills I use daily to people just getting started in tech.</p>
+<p>I'm Nnatu Promise C. — most people know me as Legacy. I'm a Computer Science student and the builder behind LxA Nexus, sharpening my skills across full-stack development, cloud computing, DevOps, cybersecurity, and AI. What pulled me into tech was simple curiosity about how the digital world actually works, and that's still what drives me today — turning ideas into real projects and pushing LxA Group toward technology that solves real problems, not just ones that look impressive.</p>
 
 <div class="founder-social">
 <a href="https://x.com/LegacyxAce" target="_blank" rel="noopener" aria-label="Follow on X"><i class="fa-brands fa-x-twitter"></i></a>
@@ -654,7 +656,49 @@ Our Projects
 <input type="checkbox" id="contact-svc-training" name="services" value="Web Programming Training" data-slug="training">
 <span>Web Programming Training</span>
 </label>
-<textarea class="service-detail" data-slug="training" placeholder="What do you need? e.g. skill level, goals, schedule" rows="2"></textarea>
+<div class="service-detail training-detail" data-slug="training">
+<p class="training-detail-label">Which package are you interested in?</p>
+<div class="training-packages">
+
+<label class="package-option" title="Your journey into the web starts here.">
+<input type="radio" name="training-package" id="contact-pkg-starter" value="LxA Web Starter (HTML, CSS, JavaScript)">
+<span class="package-dot dot-green"></span>
+<span class="package-body">
+<span class="package-name">LxA Web Starter</span>
+<span class="package-stack">HTML &middot; CSS &middot; JavaScript</span>
+</span>
+</label>
+
+<label class="package-option" title="Turn ideas into modern web experiences.">
+<input type="radio" name="training-package" id="contact-pkg-frontend" value="LxA Frontend Engineer (HTML, CSS, JavaScript, Tailwind, TypeScript)">
+<span class="package-dot dot-blue"></span>
+<span class="package-body">
+<span class="package-name">LxA Frontend Engineer</span>
+<span class="package-stack">HTML &middot; CSS &middot; JavaScript &middot; Tailwind &middot; TypeScript</span>
+</span>
+</label>
+
+<label class="package-option" title="Build applications from frontend to database.">
+<input type="radio" name="training-package" id="contact-pkg-fullstack" value="LxA Full-Stack Engineer (Frontend, TypeScript, Node.js, SQL, Supabase/MySQL)">
+<span class="package-dot dot-purple"></span>
+<span class="package-body">
+<span class="package-name">LxA Full-Stack Engineer</span>
+<span class="package-stack">Frontend &middot; TypeScript &middot; Node.js &middot; SQL &middot; Supabase/MySQL</span>
+</span>
+</label>
+
+<label class="package-option" title="Build. Deploy. Engineer.">
+<input type="radio" name="training-package" id="contact-pkg-pro" value="LxA Full-Stack Pro (Everything in Full-Stack Engineer + architecture, security, testing, Git/GitHub, deployment)">
+<span class="package-dot dot-gold"></span>
+<span class="package-body">
+<span class="package-name">LxA Full-Stack Pro</span>
+<span class="package-stack">Everything above + architecture, security, testing, Git/GitHub &amp; deployment</span>
+</span>
+</label>
+
+</div>
+<textarea placeholder="Anything else about your goals, skill level, or schedule?" rows="2"></textarea>
+</div>
 </div>
 
 <div class="service-option">
@@ -840,7 +884,49 @@ Our Projects
 <input type="checkbox" id="modal-svc-training" name="services" value="Web Programming Training" data-slug="training">
 <span>Web Programming Training</span>
 </label>
-<textarea class="service-detail" data-slug="training" placeholder="What do you need? e.g. skill level, goals, schedule" rows="2"></textarea>
+<div class="service-detail training-detail" data-slug="training">
+<p class="training-detail-label">Which package are you interested in?</p>
+<div class="training-packages">
+
+<label class="package-option" title="Your journey into the web starts here.">
+<input type="radio" name="training-package" id="modal-pkg-starter" value="LxA Web Starter (HTML, CSS, JavaScript)">
+<span class="package-dot dot-green"></span>
+<span class="package-body">
+<span class="package-name">LxA Web Starter</span>
+<span class="package-stack">HTML &middot; CSS &middot; JavaScript</span>
+</span>
+</label>
+
+<label class="package-option" title="Turn ideas into modern web experiences.">
+<input type="radio" name="training-package" id="modal-pkg-frontend" value="LxA Frontend Engineer (HTML, CSS, JavaScript, Tailwind, TypeScript)">
+<span class="package-dot dot-blue"></span>
+<span class="package-body">
+<span class="package-name">LxA Frontend Engineer</span>
+<span class="package-stack">HTML &middot; CSS &middot; JavaScript &middot; Tailwind &middot; TypeScript</span>
+</span>
+</label>
+
+<label class="package-option" title="Build applications from frontend to database.">
+<input type="radio" name="training-package" id="modal-pkg-fullstack" value="LxA Full-Stack Engineer (Frontend, TypeScript, Node.js, SQL, Supabase/MySQL)">
+<span class="package-dot dot-purple"></span>
+<span class="package-body">
+<span class="package-name">LxA Full-Stack Engineer</span>
+<span class="package-stack">Frontend &middot; TypeScript &middot; Node.js &middot; SQL &middot; Supabase/MySQL</span>
+</span>
+</label>
+
+<label class="package-option" title="Build. Deploy. Engineer.">
+<input type="radio" name="training-package" id="modal-pkg-pro" value="LxA Full-Stack Pro (Everything in Full-Stack Engineer + architecture, security, testing, Git/GitHub, deployment)">
+<span class="package-dot dot-gold"></span>
+<span class="package-body">
+<span class="package-name">LxA Full-Stack Pro</span>
+<span class="package-stack">Everything above + architecture, security, testing, Git/GitHub &amp; deployment</span>
+</span>
+</label>
+
+</div>
+<textarea placeholder="Anything else about your goals, skill level, or schedule?" rows="2"></textarea>
+</div>
 </div>
 
 <div class="service-option">

@@ -356,6 +356,53 @@ Our Projects
 
 </section>
 
+<!-- Training Packages Section -->
+<section class="training-showcase" id="training">
+
+<div class="section-heading">
+<span class="eyebrow">Web Programming Training</span>
+<h2>Pick your track</h2>
+<p>Four packages, each building on the last. Start where you are, go as far as you want.</p>
+</div>
+
+<div class="package-grid">
+
+<div class="package-card">
+<span class="package-dot dot-green"></span>
+<h3>LxA Web Starter</h3>
+<p class="package-tagline">Your journey into the web starts here.</p>
+<p class="package-card-stack">HTML &middot; CSS &middot; JavaScript</p>
+<button type="button" class="btn secondary choose-package-btn" data-package="pkg-starter">Choose This Package</button>
+</div>
+
+<div class="package-card">
+<span class="package-dot dot-blue"></span>
+<h3>LxA Frontend Engineer</h3>
+<p class="package-tagline">Turn ideas into modern web experiences.</p>
+<p class="package-card-stack">HTML &middot; CSS &middot; JavaScript &middot; Tailwind &middot; TypeScript</p>
+<button type="button" class="btn secondary choose-package-btn" data-package="pkg-frontend">Choose This Package</button>
+</div>
+
+<div class="package-card">
+<span class="package-dot dot-purple"></span>
+<h3>LxA Full-Stack Engineer</h3>
+<p class="package-tagline">Build applications from frontend to database.</p>
+<p class="package-card-stack">Frontend &middot; TypeScript &middot; Node.js &middot; SQL &middot; Supabase/MySQL</p>
+<button type="button" class="btn secondary choose-package-btn" data-package="pkg-fullstack">Choose This Package</button>
+</div>
+
+<div class="package-card featured">
+<span class="package-dot dot-gold"></span>
+<h3>LxA Full-Stack Pro</h3>
+<p class="package-tagline">Build. Deploy. Engineer.</p>
+<p class="package-card-stack">Everything above + architecture, security, testing, Git/GitHub &amp; deployment</p>
+<button type="button" class="btn primary choose-package-btn" data-package="pkg-pro">Choose This Package</button>
+</div>
+
+</div>
+
+</section>
+
 <!-- Process Section -->
 <section class="process" id="process">
 
@@ -657,8 +704,8 @@ Our Projects
 <span>Web Programming Training</span>
 </label>
 <div class="service-detail training-detail" data-slug="training">
-<p class="training-detail-label">Which package are you interested in?</p>
-<div class="training-packages">
+<p class="training-detail-label" id="contact-training-label">Which package are you interested in?</p>
+<div class="training-packages" role="radiogroup" aria-labelledby="contact-training-label">
 
 <label class="package-option" title="Your journey into the web starts here.">
 <input type="radio" name="training-package" id="contact-pkg-starter" value="LxA Web Starter (HTML, CSS, JavaScript)">
@@ -885,8 +932,8 @@ Our Projects
 <span>Web Programming Training</span>
 </label>
 <div class="service-detail training-detail" data-slug="training">
-<p class="training-detail-label">Which package are you interested in?</p>
-<div class="training-packages">
+<p class="training-detail-label" id="modal-training-label">Which package are you interested in?</p>
+<div class="training-packages" role="radiogroup" aria-labelledby="modal-training-label">
 
 <label class="package-option" title="Your journey into the web starts here.">
 <input type="radio" name="training-package" id="modal-pkg-starter" value="LxA Web Starter (HTML, CSS, JavaScript)">

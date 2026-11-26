@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact LxA Nexus to discuss a project, service or technology training.">
+    <meta name="theme-color" content="#050505" id="theme-color-meta">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Contact LxA Nexus | Start a Project">
+    <meta property="og:description" content="Contact LxA Nexus to discuss a project, service or technology training.">
+    <link rel="canonical" href="https://lxa-nexus-website.vercel.app/contact.html">
+    <link rel="icon" type="image/png" href="assets/favicon-32.png">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Contact LxA Nexus | Start a Project</title>
+    <script>
+      (() => {
+        const saved = localStorage.getItem('lxa-theme');
+        const systemLight = window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: light)').matches;
+        const theme = saved || (systemLight ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+</head>
+<body>
+<header>
+
+<nav class="navbar">
+
+<a href="index.html" class="logo">
+<picture>
+<source srcset="assets/logo-full.webp" type="image/webp">
+<img src="assets/logo-full.png" alt="LxA Nexus" class="logo-full-img theme-logo-dark">
+</picture>
+<picture>
+<source srcset="assets/logo-full-light.webp" type="image/webp">
+<img src="assets/logo-full-light.png" alt="LxA Nexus" class="logo-full-img theme-logo-light">
+</picture>
+</a>
+
+<ul class="nav-links">
+
+<li><a href="index.html" class="active">Home</a></li>
+
+<li><a href="about.html">About</a></li>
+
+<li><a href="projects.html">Projects</a></li>
+
+<li><a href="contact.html">Contact</a></li>
+
+<li class="theme-toggle-mobile-item">
+<button type="button" id="theme-toggle-mobile" class="theme-toggle theme-toggle-btn" aria-label="Toggle light and dark mode">
+<i class="fa-solid fa-moon"></i> <span>Switch to light mode</span>
+</button>
+</li>
+
+<li class="nav-cta-mobile-item">
+<button type="button" id="start-project-btn-mobile" class="btn primary nav-cta-mobile">Start a Project</button>
+</li>
+
+</ul>
+
+<div class="nav-actions">
+<button type="button" id="start-project-btn" class="btn primary nav-cta">Start a Project</button>
+
+<button type="button" id="theme-toggle" class="theme-toggle theme-toggle-btn" aria-label="Toggle light and dark mode">
+<i class="fa-solid fa-moon"></i>
+</button>
+
+<button type="button" class="menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+</div>
+
+</nav>
+
+</header>
+
+<main>
+<section class="contact" id="contact">
+
+<div class="contact-inner">
+
+<div class="contact-info">
+<span class="eyebrow">Contact</span>
+<h2>Tell us what you're building</h2>
+<p>Share a few details about your project and we'll get back to you within one business day.</p>
+
+<div class="contact-detail">
+<i class="fa-solid fa-phone"></i>
+<span>+234 702 569 3604</span>
+</div>
+
+<div class="contact-detail">
+<i class="fa-solid fa-location-dot"></i>
+<span>Lagos, Nigeria</span>
+</div>
+
+<div class="social-links">
+<a href="https://x.com/LegacyxAce" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i></a>
+<a href="https://github.com/Legacyace-coder" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+</div>
+</div>
+
+<div class="project-form-wrapper">
+
+<form class="contact-form project-form" id="contact-form">
+
+<div class="form-row">
+<label for="contact-name">Name</label>
+<input type="text" id="contact-name" name="name" placeholder="Your name" required>
+</div>
+
+<div class="form-row">
+<label for="contact-email">Email</label>
+<input type="email" id="contact-email" name="email" placeholder="you@company.com" required>
+</div>
+
+<div class="form-row">
+<label>Which service(s) do you want?</label>
+<div class="service-options">
+
+<div class="service-option">
+<label class="service-checkbox" for="contact-svc-web">
+<input type="checkbox" id="contact-svc-web" name="services" value="Web Development" data-slug="web">
+<span>Web Development</span>
+</label>
+<textarea class="service-detail" data-slug="web" placeholder="What do you need? e.g. type of website, features, timeline" rows="2"></textarea>
+</div>
+
+<div class="service-option">
+<label class="service-checkbox" for="contact-svc-training">
+<input type="checkbox" id="contact-svc-training" name="services" value="Web Programming Training" data-slug="training">
+<span>Web Programming Training</span>
+</label>
+<div class="service-detail training-detail" data-slug="training">
+<p class="training-detail-label" id="contact-training-label">Which package are you interested in?</p>
+<div class="training-packages" role="radiogroup" aria-labelledby="contact-training-label">
+
+<label class="package-option" title="Your journey into the web starts here.">
+<input type="radio" name="training-package" id="contact-pkg-starter" value="LxA Web Starter (HTML, CSS, JavaScript)">
+<span class="package-dot dot-green"></span>
+<span class="package-body">
+<span class="package-name">LxA Web Starter</span>
+<span class="package-stack">HTML &middot; CSS &middot; JavaScript</span>
+</span>
+</label>
+
+<label class="package-option" title="Turn ideas into modern web experiences.">
+<input type="radio" name="training-package" id="contact-pkg-frontend" value="LxA Frontend Engineer (HTML, CSS, JavaScript, Tailwind, TypeScript)">
+<span class="package-dot dot-blue"></span>
+<span class="package-body">
+<span class="package-name">LxA Frontend Engineer</span>
+<span class="package-stack">HTML &middot; CSS &middot; JavaScript &middot; Tailwind &middot; TypeScript</span>
+</span>
+</label>
+
+<label class="package-option" title="Build applications from frontend to database.">
+<input type="radio" name="training-package" id="contact-pkg-fullstack" value="LxA Full-Stack Engineer (Frontend, TypeScript, Node.js, SQL, Supabase/MySQL)">
+<span class="package-dot dot-purple"></span>
+<span class="package-body">
+<span class="package-name">LxA Full-Stack Engineer</span>
+<span class="package-stack">Frontend &middot; TypeScript &middot; Node.js &middot; SQL &middot; Supabase/MySQL</span>
+</span>
+</label>
+
+<label class="package-option" title="Build. Deploy. Engineer.">
+<input type="radio" name="training-package" id="contact-pkg-pro" value="LxA Full-Stack Pro (Everything in Full-Stack Engineer + architecture, security, testing, Git/GitHub, deployment)">
+<span class="package-dot dot-gold"></span>
+<span class="package-body">
+<span class="package-name">LxA Full-Stack Pro</span>
+<span class="package-stack">Everything above + architecture, security, testing, Git/GitHub &amp; deployment</span>
+</span>
+</label>
+
+</div>
+<textarea placeholder="Anything else about your goals, skill level, or schedule?" rows="2"></textarea>
+</div>
+</div>
+
+<div class="service-option">
+<label class="service-checkbox" for="contact-svc-security">
+<input type="checkbox" id="contact-svc-security" name="services" value="Cybersecurity" data-slug="security">
+<span>Cybersecurity</span>
+</label>
+<textarea class="service-detail" data-slug="security" placeholder="What do you need? e.g. audit, monitoring, incident response" rows="2"></textarea>
+</div>
+
+<div class="service-option">
+<label class="service-checkbox" for="contact-svc-cloud">
+<input type="checkbox" id="contact-svc-cloud" name="services" value="Cloud Solutions" data-slug="cloud">
+<span>Cloud Solutions</span>
+</label>
+<textarea class="service-detail" data-slug="cloud" placeholder="What do you need? e.g. migration, scaling, DevOps" rows="2"></textarea>
+</div>
+
+<div class="service-option">
+<label class="service-checkbox" for="contact-svc-ai">
+<input type="checkbox" id="contact-svc-ai" name="services" value="Artificial Intelligence" data-slug="ai">
+<span>Artificial Intelligence</span>
+</label>
+<textarea class="service-detail" data-slug="ai" placeholder="What do you need? e.g. chatbot, automation, integration" rows="2"></textarea>
+</div>
+
+<div class="service-option">
+<label class="service-checkbox" for="contact-svc-consulting">
+<input type="checkbox" id="contact-svc-consulting" name="services" value="IT Consulting" data-slug="consulting">
+<span>IT Consulting</span>
+</label>
+<textarea class="service-detail" data-slug="consulting" placeholder="What do you need? e.g. strategy, roadmap, technical advice" rows="2"></textarea>
+</div>
+
+</div>
+</div>
+
+<div class="form-row">
+<label for="contact-message">Anything else we should know? (optional)</label>
+<textarea id="contact-message" name="message" placeholder="Any other details" rows="3"></textarea>
+</div>
+
+<div class="form-actions">
+<button type="submit" class="btn primary book-now-btn">
+<i class="fa-solid fa-envelope"></i> Send to Us
+</button>
+
+<a href="tel:+2347025693604" class="btn call-btn" aria-label="Call us directly">
+<i class="fa-solid fa-phone"></i>
+</a>
+</div>
+
+<p class="form-status" id="form-status"></p>
+
+</form>
+
+<div class="form-success" id="contact-form-success" hidden>
+<i class="fa-solid fa-circle-check"></i>
+<h3>Thanks — you're all set!</h3>
+<p>We'll get back to you within 24 hours to talk more.</p>
+<div class="success-actions">
+<a href="tel:+2347025693604" class="btn primary">
+<i class="fa-solid fa-phone"></i> Call Us Now
+</a>
+<a href="https://calendly.com/acenobs" target="_blank" rel="noopener" class="btn secondary">
+<i class="fa-solid fa-calendar-days"></i> Or Book an Appointment
+</a>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+</main>
+
+<div class="floating-cta">
+<a href="https://calendly.com/acenobs" target="_blank" rel="noopener" class="btn primary floating-book">
+<i class="fa-solid fa-calendar-days"></i> Book an Appointment
+</a>
+<a href="tel:+2347025693604" class="btn call-btn floating-call" aria-label="Call us directly">
+<i class="fa-solid fa-phone"></i>
+</a>
+</div>
+<footer>
+
+<div class="footer-inner">
+
+<div class="footer-brand">
+<picture>
+<source srcset="assets/logo-full.webp" type="image/webp">
+<img src="assets/logo-full.png" alt="LxA Nexus" class="footer-logo-full theme-logo-dark">
+</picture>
+<picture>
+<source srcset="assets/logo-full-light.webp" type="image/webp">
+<img src="assets/logo-full-light.png" alt="LxA Nexus" class="footer-logo-full theme-logo-light">
+</picture>
+<div class="footer-tagline">
+<p class="tagline-primary">Connect · Build · Secure · Elevate</p>
+<p class="tagline-secondary">Building the future through technology.</p>
+</div>
+</div>
+
+<div class="footer-links">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="services.html">Services</a>
+<a href="projects.html">Projects</a>
+<a href="faq.html">FAQ</a>
+<a href="contact.html">Contact</a>
+</div>
+
+<div class="footer-copy">
+&copy; <span id="year"></span> LxA Nexus. All rights reserved. &middot; <a href="privacy.html">Privacy Policy</a>
+</div>
+
+</div>
+
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Find answers to common questions about LxA Nexus services and training.">
+    <meta name="theme-color" content="#050505" id="theme-color-meta">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Frequently Asked Questions | LxA Nexus">
+    <meta property="og:description" content="Find answers to common questions about LxA Nexus services and training.">
+    <link rel="canonical" href="https://lxa-nexus-website.vercel.app/faq.html">
+    <link rel="icon" type="image/png" href="assets/favicon-32.png">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Frequently Asked Questions | LxA Nexus</title>
+    <script>
+      (() => {
+        const saved = localStorage.getItem('lxa-theme');
+        const systemLight = window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: light)').matches;
+        const theme = saved || (systemLight ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+</head>
+<body>
+<header>
+
+<nav class="navbar">
+
+<a href="index.html" class="logo">
+<picture>
+<source srcset="assets/logo-full.webp" type="image/webp">
+<img src="assets/logo-full.png" alt="LxA Nexus" class="logo-full-img theme-logo-dark">
+</picture>
+<picture>
+<source srcset="assets/logo-full-light.webp" type="image/webp">
+<img src="assets/logo-full-light.png" alt="LxA Nexus" class="logo-full-img theme-logo-light">
+</picture>
+</a>
+
+<ul class="nav-links">
+
+<li><a href="index.html" class="active">Home</a></li>
+
+<li><a href="about.html">About</a></li>
+
+<li><a href="projects.html">Projects</a></li>
+
+<li><a href="contact.html">Contact</a></li>
+
+<li class="theme-toggle-mobile-item">
+<button type="button" id="theme-toggle-mobile" class="theme-toggle theme-toggle-btn" aria-label="Toggle light and dark mode">
+<i class="fa-solid fa-moon"></i> <span>Switch to light mode</span>
+</button>
+</li>
+
+<li class="nav-cta-mobile-item">
+<button type="button" id="start-project-btn-mobile" class="btn primary nav-cta-mobile">Start a Project</button>
+</li>
+
+</ul>
+
+<div class="nav-actions">
+<button type="button" id="start-project-btn" class="btn primary nav-cta">Start a Project</button>
+
+<button type="button" id="theme-toggle" class="theme-toggle theme-toggle-btn" aria-label="Toggle light and dark mode">
+<i class="fa-solid fa-moon"></i>
+</button>
+
+<button type="button" class="menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+</div>
+
+</nav>
+
+</header>
+
+<main>
+<section class="faq" id="faq">
+
+<div class="section-heading">
+<span class="eyebrow">FAQ</span>
+<h2>Common questions</h2>
+<p>Can't find what you're looking for? Chat with us directly using the button in the corner.</p>
+</div>
+
+<div class="faq-list">
+
+<details class="faq-item">
+<summary>How much does a website cost?</summary>
+<p>It depends on the scope — a landing page costs less than a full business site or a custom web app. Tell us what you need in the "Start a Project" form and we'll give you a clear quote, no guesswork.</p>
+</details>
+
+<details class="faq-item">
+<summary>How long does a typical project take?</summary>
+<p>Most business websites take a few weeks from kickoff to launch. Larger builds — like management systems or custom platforms — take longer. We'll give you a realistic timeline once we understand the scope.</p>
+</details>
+
+<details class="faq-item">
+<summary>Do you offer support after the site is live?</summary>
+<p>Yes. We stick around for fixes, updates, and the next feature — most of our clients stay with us well past launch.</p>
+</details>
+
+<details class="faq-item">
+<summary>Can you redesign or upgrade a website I already have?</summary>
+<p>Yes — we regularly rebuild existing sites on a more scalable, modern foundation rather than starting from scratch unnecessarily.</p>
+</details>
+
+<details class="faq-item">
+<summary>Do I need coding experience to join the training program?</summary>
+<p>No. Our web programming training starts from first principles and is built for complete beginners, as well as anyone looking to sharpen existing skills.</p>
+</details>
+
+<details class="faq-item">
+<summary>Do you work with clients outside Lagos?</summary>
+<p>Yes — we work with clients remotely across Nigeria and beyond. Most of the process happens over chat, call, and email either way.</p>
+</details>
+
+</div>
+
+</section>
+</main>
+
+<div class="floating-cta">
+<a href="https://calendly.com/acenobs" target="_blank" rel="noopener" class="btn primary floating-book">
+<i class="fa-solid fa-calendar-days"></i> Book an Appointment
+</a>
+<a href="tel:+2347025693604" class="btn call-btn floating-call" aria-label="Call us directly">
+<i class="fa-solid fa-phone"></i>
+</a>
+</div>
+<footer>
+
+<div class="footer-inner">
+
+<div class="footer-brand">
+<picture>
+<source srcset="assets/logo-full.webp" type="image/webp">
+<img src="assets/logo-full.png" alt="LxA Nexus" class="footer-logo-full theme-logo-dark">
+</picture>
+<picture>
+<source srcset="assets/logo-full-light.webp" type="image/webp">
+<img src="assets/logo-full-light.png" alt="LxA Nexus" class="footer-logo-full theme-logo-light">
+</picture>
+<div class="footer-tagline">
+<p class="tagline-primary">Connect · Build · Secure · Elevate</p>
+<p class="tagline-secondary">Building the future through technology.</p>
+</div>
+</div>
+
+<div class="footer-links">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="services.html">Services</a>
+<a href="projects.html">Projects</a>
+<a href="faq.html">FAQ</a>
+<a href="contact.html">Contact</a>
+</div>
+
+<div class="footer-copy">
+&copy; <span id="year"></span> LxA Nexus. All rights reserved. &middot; <a href="privacy.html">Privacy Policy</a>
+</div>
+
+</div>
+
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

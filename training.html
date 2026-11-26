@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore practical programming and computer training opportunities at LxA Nexus.">
+    <meta name="theme-color" content="#050505" id="theme-color-meta">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Technology Training | LxA Nexus">
+    <meta property="og:description" content="Explore practical programming and computer training opportunities at LxA Nexus.">
+    <link rel="canonical" href="https://lxa-nexus-website.vercel.app/training.html">
+    <link rel="icon" type="image/png" href="assets/favicon-32.png">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Technology Training | LxA Nexus</title>
+    <script>
+      (() => {
+        const saved = localStorage.getItem('lxa-theme');
+        const systemLight = window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: light)').matches;
+        const theme = saved || (systemLight ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+</head>
+<body>
+<header>
+
+<nav class="navbar">
+
+<a href="index.html" class="logo">
+<picture>
+<source srcset="assets/logo-full.webp" type="image/webp">
+<img src="assets/logo-full.png" alt="LxA Nexus" class="logo-full-img theme-logo-dark">
+</picture>
+<picture>
+<source srcset="assets/logo-full-light.webp" type="image/webp">
+<img src="assets/logo-full-light.png" alt="LxA Nexus" class="logo-full-img theme-logo-light">
+</picture>
+</a>
+
+<ul class="nav-links">
+
+<li><a href="index.html" class="active">Home</a></li>
+
+<li><a href="about.html">About</a></li>
+
+<li><a href="projects.html">Projects</a></li>
+
+<li><a href="contact.html">Contact</a></li>
+
+<li class="theme-toggle-mobile-item">
+<button type="button" id="theme-toggle-mobile" class="theme-toggle theme-toggle-btn" aria-label="Toggle light and dark mode">
+<i class="fa-solid fa-moon"></i> <span>Switch to light mode</span>
+</button>
+</li>
+
+<li class="nav-cta-mobile-item">
+<button type="button" id="start-project-btn-mobile" class="btn primary nav-cta-mobile">Start a Project</button>
+</li>
+
+</ul>
+
+<div class="nav-actions">
+<button type="button" id="start-project-btn" class="btn primary nav-cta">Start a Project</button>
+
+<button type="button" id="theme-toggle" class="theme-toggle theme-toggle-btn" aria-label="Toggle light and dark mode">
+<i class="fa-solid fa-moon"></i>
+</button>
+
+<button type="button" class="menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+</div>
+
+</nav>
+
+</header>
+
+<main>
+<section class="training-showcase" id="training">
+
+<div class="section-heading">
+<span class="eyebrow">Web Programming Training</span>
+<h2>Pick your track</h2>
+<p>Four packages, each building on the last. Start where you are, go as far as you want.</p>
+</div>
+
+<div class="package-grid">
+
+<div class="package-card">
+<span class="package-dot dot-green"></span>
+<h3>LxA Web Starter</h3>
+<p class="package-tagline">Your journey into the web starts here.</p>
+<p class="package-card-stack">HTML &middot; CSS &middot; JavaScript</p>
+<button type="button" class="btn secondary choose-package-btn" data-package="pkg-starter">Choose This Package</button>
+</div>
+
+<div class="package-card">
+<span class="package-dot dot-blue"></span>
+<h3>LxA Frontend Engineer</h3>
+<p class="package-tagline">Turn ideas into modern web experiences.</p>
+<p class="package-card-stack">HTML &middot; CSS &middot; JavaScript &middot; Tailwind &middot; TypeScript</p>
+<button type="button" class="btn secondary choose-package-btn" data-package="pkg-frontend">Choose This Package</button>
+</div>
+
+<div class="package-card">
+<span class="package-dot dot-purple"></span>
+<h3>LxA Full-Stack Engineer</h3>
+<p class="package-tagline">Build applications from frontend to database.</p>
+<p class="package-card-stack">Frontend &middot; TypeScript &middot; Node.js &middot; SQL &middot; Supabase/MySQL</p>
+<button type="button" class="btn secondary choose-package-btn" data-package="pkg-fullstack">Choose This Package</button>
+</div>
+
+<div class="package-card featured">
+<span class="package-dot dot-gold"></span>
+<h3>LxA Full-Stack Pro</h3>
+<p class="package-tagline">Build. Deploy. Engineer.</p>
+<p class="package-card-stack">Everything above + architecture, security, testing, Git/GitHub &amp; deployment</p>
+<button type="button" class="btn primary choose-package-btn" data-package="pkg-pro">Choose This Package</button>
+</div>
+
+</div>
+
+</section>
+</main>
+
+<div class="floating-cta">
+<a href="https://calendly.com/acenobs" target="_blank" rel="noopener" class="btn primary floating-book">
+<i class="fa-solid fa-calendar-days"></i> Book an Appointment
+</a>
+<a href="tel:+2347025693604" class="btn call-btn floating-call" aria-label="Call us directly">
+<i class="fa-solid fa-phone"></i>
+</a>
+</div>
+<footer>
+
+<div class="footer-inner">
+
+<div class="footer-brand">
+<picture>
+<source srcset="assets/logo-full.webp" type="image/webp">
+<img src="assets/logo-full.png" alt="LxA Nexus" class="footer-logo-full theme-logo-dark">
+</picture>
+<picture>
+<source srcset="assets/logo-full-light.webp" type="image/webp">
+<img src="assets/logo-full-light.png" alt="LxA Nexus" class="footer-logo-full theme-logo-light">
+</picture>
+<div class="footer-tagline">
+<p class="tagline-primary">Connect · Build · Secure · Elevate</p>
+<p class="tagline-secondary">Building the future through technology.</p>
+</div>
+</div>
+
+<div class="footer-links">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="services.html">Services</a>
+<a href="projects.html">Projects</a>
+<a href="faq.html">FAQ</a>
+<a href="contact.html">Contact</a>
+</div>
+
+<div class="footer-copy">
+&copy; <span id="year"></span> LxA Nexus. All rights reserved. &middot; <a href="privacy.html">Privacy Policy</a>
+</div>
+
+</div>
+
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore selected technology projects built and deployed by LxA Nexus.">
+    <meta name="theme-color" content="#050505" id="theme-color-meta">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Selected Projects | LxA Nexus">
+    <meta property="og:description" content="Explore selected technology projects built and deployed by LxA Nexus.">
+    <link rel="canonical" href="https://lxa-nexus-website.vercel.app/projects.html">
+    <link rel="icon" type="image/png" href="assets/favicon-32.png">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Selected Projects | LxA Nexus</title>
+    <script>
+      (() => {
+        const saved = localStorage.getItem('lxa-theme');
+        const systemLight = window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: light)').matches;
+        const theme = saved || (systemLight ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+</head>
+<body>
+<header>
+
+<nav class="navbar">
+
+<a href="index.html" class="logo">
+<picture>
+<source srcset="assets/logo-full.webp" type="image/webp">
+<img src="assets/logo-full.png" alt="LxA Nexus" class="logo-full-img theme-logo-dark">
+</picture>
+<picture>
+<source srcset="assets/logo-full-light.webp" type="image/webp">
+<img src="assets/logo-full-light.png" alt="LxA Nexus" class="logo-full-img theme-logo-light">
+</picture>
+</a>
+
+<ul class="nav-links">
+
+<li><a href="index.html" class="active">Home</a></li>
+
+<li><a href="about.html">About</a></li>
+
+<li><a href="projects.html">Projects</a></li>
+
+<li><a href="contact.html">Contact</a></li>
+
+<li class="theme-toggle-mobile-item">
+<button type="button" id="theme-toggle-mobile" class="theme-toggle theme-toggle-btn" aria-label="Toggle light and dark mode">
+<i class="fa-solid fa-moon"></i> <span>Switch to light mode</span>
+</button>
+</li>
+
+<li class="nav-cta-mobile-item">
+<button type="button" id="start-project-btn-mobile" class="btn primary nav-cta-mobile">Start a Project</button>
+</li>
+
+</ul>
+
+<div class="nav-actions">
+<button type="button" id="start-project-btn" class="btn primary nav-cta">Start a Project</button>
+
+<button type="button" id="theme-toggle" class="theme-toggle theme-toggle-btn" aria-label="Toggle light and dark mode">
+<i class="fa-solid fa-moon"></i>
+</button>
+
+<button type="button" class="menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+</div>
+
+</nav>
+
+</header>
+
+<main>
+<section class="projects" id="projects">
+    <div class="section-heading">
+        <span class="eyebrow">Selected Projects</span>
+        <h2>Built and deployed by LxA Nexus</h2>
+        <p>A selection of platforms and digital experiences across different areas of technology.</p>
+    </div>
+    <div class="projects-grid projects-grid-expanded">
+        <article class="project-card project-card-expanded">
+    <a class="project-card-preview" href="projects/lxa-associates.html">
+        <img src="assets/case-studies/lxa-associates-hero.jpg" alt="LxA Associates website preview" loading="lazy">
+    </a>
+    <div class="project-card-content">
+        <span class="tag">Legal Website</span>
+        <h3>LxA Associates</h3>
+        <p>A refined digital presence for a legal practice, designed to communicate its identity, practice areas and professional services.</p>
+        <a class="project-detail-link" href="projects/lxa-associates.html">Explore case study <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+</article>
+<article class="project-card project-card-expanded">
+    <a class="project-card-preview" href="projects/lxa-international-school.html">
+        <div class="project-card-visual"><i class="fa-solid fa-graduation-cap"></i><span>02</span></div>
+    </a>
+    <div class="project-card-content">
+        <span class="tag">School Management Platform</span>
+        <h3>LxA International School</h3>
+        <p>A school website and management platform bringing public information and role-based school portals into one digital environment.</p>
+        <a class="project-detail-link" href="projects/lxa-international-school.html">Explore case study <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+</article>
+<article class="project-card project-card-expanded">
+    <a class="project-card-preview" href="projects/retail-ai-assistant.html">
+        <div class="project-card-visual"><i class="fa-solid fa-bag-shopping"></i><span>03</span></div>
+    </a>
+    <div class="project-card-content">
+        <span class="tag">AI Retail Project</span>
+        <h3>Retail AI Assistant</h3>
+        <p>An AI-assisted shopping experience designed to help customers navigate an online clothing catalogue and discover relevant products.</p>
+        <a class="project-detail-link" href="projects/retail-ai-assistant.html">Explore case study <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+</article>
+<article class="project-card project-card-expanded">
+    <a class="project-card-preview" href="projects/northstar-capital.html">
+        <div class="project-card-visual"><i class="fa-solid fa-chart-line"></i><span>04</span></div>
+    </a>
+    <div class="project-card-content">
+        <span class="tag">Financial Platform</span>
+        <h3>Northstar Capital</h3>
+        <p>A financial platform with a public-facing website and member experience, supported by administrative tools and structured investment workflows.</p>
+        <a class="project-detail-link" href="projects/northstar-capital.html">Explore case study <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+</article>
+<article class="project-card project-card-expanded">
+    <a class="project-card-preview" href="projects/visora.html">
+        <div class="project-card-visual"><i class="fa-solid fa-camera"></i><span>05</span></div>
+    </a>
+    <div class="project-card-content">
+        <span class="tag">Photography Publishing Platform</span>
+        <h3>Visora</h3>
+        <p>A photography publishing platform built to provide a dedicated digital experience for photography-related content and workflows.</p>
+        <a class="project-detail-link" href="projects/visora.html">Explore case study <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+</article>
+<article class="project-card project-card-expanded">
+    <a class="project-card-preview" href="projects/muvy.html">
+        <div class="project-card-visual"><i class="fa-solid fa-film"></i><span>06</span></div>
+    </a>
+    <div class="project-card-content">
+        <span class="tag">Movie Identification Application</span>
+        <h3>MUVY</h3>
+        <p>A movie identification application concept designed to help users identify films from visual or audio references and keep track of what they discover.</p>
+        <a class="project-detail-link" href="projects/muvy.html">Explore case study <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+</article>
+    </div>
+</section>
+</main>
+
+<div class="floating-cta">
+<a href="https://calendly.com/acenobs" target="_blank" rel="noopener" class="btn primary floating-book">
+<i class="fa-solid fa-calendar-days"></i> Book an Appointment
+</a>
+<a href="tel:+2347025693604" class="btn call-btn floating-call" aria-label="Call us directly">
+<i class="fa-solid fa-phone"></i>
+</a>
+</div>
+<footer>
+
+<div class="footer-inner">
+
+<div class="footer-brand">
+<picture>
+<source srcset="assets/logo-full.webp" type="image/webp">
+<img src="assets/logo-full.png" alt="LxA Nexus" class="footer-logo-full theme-logo-dark">
+</picture>
+<picture>
+<source srcset="assets/logo-full-light.webp" type="image/webp">
+<img src="assets/logo-full-light.png" alt="LxA Nexus" class="footer-logo-full theme-logo-light">
+</picture>
+<div class="footer-tagline">
+<p class="tagline-primary">Connect · Build · Secure · Elevate</p>
+<p class="tagline-secondary">Building the future through technology.</p>
+</div>
+</div>
+
+<div class="footer-links">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="services.html">Services</a>
+<a href="projects.html">Projects</a>
+<a href="faq.html">FAQ</a>
+<a href="contact.html">Contact</a>
+</div>
+
+<div class="footer-copy">
+&copy; <span id="year"></span> LxA Nexus. All rights reserved. &middot; <a href="privacy.html">Privacy Policy</a>
+</div>
+
+</div>
+
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

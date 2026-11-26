@@ -88,18 +88,8 @@ if (menuBtn && navbar && navLinks) {
 // Independent page navigation
 const currentFile = window.location.pathname.split('/').pop() || 'index.html';
 const isProjectDetailPage = window.location.pathname.includes('/projects/');
-
-const pageLinks = {
-  'index.html': 'home',
-  'about.html': 'about',
-  'services.html': 'services',
-  'training.html': 'training',
-  'process.html': 'process',
-  'projects.html': 'projects',
-  'faq.html': 'faq',
-  'contact.html': 'contact',
-  'privacy.html': 'privacy'
-};
+const serviceDetailPages = ['web-development.html', 'cybersecurity.html', 'cloud-solutions.html', 'artificial-intelligence.html', 'it-consulting.html'];
+const trainingDetailPages = ['training-starter.html', 'training-frontend.html', 'training-fullstack.html', 'training-pro.html'];
 
 // On independent pages, enquiry buttons lead to the Contact page.
 // The homepage retains its existing enquiry modal.
@@ -131,14 +121,14 @@ if (currentFile !== 'index.html') {
 const navAnchors = document.querySelectorAll('.nav-links a');
 
 if (currentFile !== 'index.html') {
-  const activePage = pageLinks[currentFile];
-
   navAnchors.forEach(link => {
     const href = link.getAttribute('href') || '';
     const targetFile = href.split('#')[0];
     const isCurrentPage = isProjectDetailPage
       ? targetFile === '../projects.html'
-      : targetFile === currentFile;
+      : targetFile === currentFile ||
+        (serviceDetailPages.includes(currentFile) && targetFile === 'services.html') ||
+        (trainingDetailPages.includes(currentFile) && targetFile === 'training.html');
 
     link.classList.toggle('active', isCurrentPage);
 
@@ -179,6 +169,14 @@ document.querySelectorAll('.service-checkbox input[type="checkbox"]').forEach(ch
 });
 
 const requestedPackage = new URLSearchParams(window.location.search).get('package');
+const requestedService = new URLSearchParams(window.location.search).get('service');
+if (currentFile === 'contact.html' && ['web', 'security', 'cloud', 'ai', 'consulting'].includes(requestedService)) {
+  const serviceCheckbox = document.getElementById(`contact-svc-${requestedService}`);
+  if (serviceCheckbox) {
+    serviceCheckbox.checked = true;
+    serviceCheckbox.dispatchEvent(new Event('change'));
+  }
+}
 if (currentFile === 'contact.html' && ['starter', 'frontend', 'fullstack', 'pro'].includes(requestedPackage)) {
   const trainingCheckbox = document.getElementById('contact-svc-training');
   const packageRadio = document.getElementById(`contact-pkg-${requestedPackage}`);
@@ -354,29 +352,6 @@ if (projectModal && (startProjectBtn || startProjectBtnMobile)) {
     if (e.key === 'Escape' && projectModal.classList.contains('open')) closeModal();
   });
 
-  // "Choose This Package" cards in the public Training showcase â€”
-  // pre-select the training service and that specific package, then open the modal.
-  document.querySelectorAll('.choose-package-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const trainingCheckbox = document.getElementById('modal-svc-training');
-      const packageRadio = document.getElementById(`modal-${btn.dataset.package}`);
-
-      if (trainingCheckbox && !trainingCheckbox.checked) {
-        trainingCheckbox.checked = true;
-        trainingCheckbox.dispatchEvent(new Event('change'));
-      }
-      if (packageRadio) packageRadio.checked = true;
-
-      openModal();
-
-      if (packageRadio) {
-        requestAnimationFrame(() => {
-          const optionCard = packageRadio.closest('.service-option');
-          if (optionCard) optionCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        });
-      }
-    });
-  });
 }
 
 // Nexus network canvas animation in hero

@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Replace https://lxanexus.com/ below with your actual live domain once you have one -->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://lxanexus.com/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-</urlset>
+<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">  <url>    <loc>https://legacyace-coder.github.io/LxA-Nexus-Website/</loc>    <changefreq>monthly</changefreq>    <priority>1.0</priority>  </url></urlset>

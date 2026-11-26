@@ -42,20 +42,18 @@
   var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
   document.documentElement.setAttribute('data-theme', theme);
   var meta = document.getElementById('theme-color-meta');
-  if (meta) meta.setAttribute('content', theme === 'light' ? '#FAFAF9' : '#050505');
+  if (meta) meta.setAttribute('content', theme === 'light' ? '#f8faff' : '#171b28');
 })();
 </script>
 
-<!-- Structured data for search engines. Replace the placeholder URLs (https://lxanexus.com/...)
-     with your real domain once you have one. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "LxA Nexus",
-  "url": "https://lxanexus.com/",
-  "logo": "https://lxanexus.com/assets/logo-icon.png",
-  "image": "https://lxanexus.com/assets/logo-full.png",
+  "url": "https://legacyace-coder.github.io/LxA-Nexus-Website/",
+  "logo": "https://legacyace-coder.github.io/LxA-Nexus-Website/assets/logo-full.png",
+  "image": "https://legacyace-coder.github.io/LxA-Nexus-Website/assets/logo-full.png",
   "description": "LxA Nexus is a Lagos-based technology studio offering web development, web programming training, cybersecurity, cloud solutions, AI, and IT consulting.",
   "telephone": "+2347025693604",
   "address": {
@@ -93,7 +91,7 @@
 
 <nav class="navbar">
 
-<a href="#home" class="logo">
+<a href="index.html" class="logo">
 <picture>
 <source srcset="assets/logo-full.webp" type="image/webp">
 <img src="assets/logo-full.png" alt="LxA Nexus" class="logo-full-img theme-logo-dark">
@@ -106,11 +104,19 @@
 
 <ul class="nav-links">
 
-<li><a href="#home" class="active">Home</a></li>
+<li><a href="index.html" class="active">Home</a></li>
 
-<li><a href="#about">About</a></li>
+<li><a href="about.html">About</a></li>
 
-<li><a href="#contact">Contact</a></li>
+<li><a href="projects.html">Projects</a></li>
+
+<li><a href="contact.html">Contact</a></li>
+
+<li class="theme-toggle-mobile-item">
+<button type="button" id="theme-toggle-mobile" class="theme-toggle theme-toggle-btn" aria-label="Toggle light and dark mode">
+<i class="fa-solid fa-moon"></i> <span>Switch to light mode</span>
+</button>
+</li>
 
 <li class="nav-cta-mobile-item">
 <button type="button" id="start-project-btn-mobile" class="btn primary nav-cta-mobile">Start a Project</button>
@@ -121,7 +127,7 @@
 <div class="nav-actions">
 <button type="button" id="start-project-btn" class="btn primary nav-cta">Start a Project</button>
 
-<button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle light and dark mode">
+<button type="button" id="theme-toggle" class="theme-toggle theme-toggle-btn" aria-label="Toggle light and dark mode">
 <i class="fa-solid fa-moon"></i>
 </button>
 
@@ -158,11 +164,11 @@ Available for new projects
 
 <div class="hero-buttons">
 
-<a href="#contact" class="btn primary">
+<a href="contact.html" class="btn primary">
 Get Started
 </a>
 
-<a href="#projects" class="btn secondary">
+<a href="projects.html" class="btn secondary">
 Our Projects
 </a>
 
@@ -206,6 +212,34 @@ Our Projects
 <i class="fa-solid fa-chevron-down"></i>
 </div>
 
+</section>
+
+<section class="home-intro" aria-labelledby="home-intro-title">
+<div class="home-intro-heading">
+<span class="eyebrow">Good ideas deserve great technology</span>
+<h2 id="home-intro-title">Let's build something that moves you forward.</h2>
+<p>From your first idea to your next big step, we're here to make technology feel a little more human.</p>
+</div>
+<div class="home-intro-grid">
+<a href="services.html" class="home-intro-card">
+<span class="home-intro-icon"><i class="fa-solid fa-code" aria-hidden="true"></i></span>
+<h3>Build with us</h3>
+<p>Thoughtful websites and digital solutions made for your goals.</p>
+<span class="home-intro-link">Explore services <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+</a>
+<a href="training.html" class="home-intro-card">
+<span class="home-intro-icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></span>
+<h3>Learn with us</h3>
+<p>Practical training to help you grow your skills and confidence.</p>
+<span class="home-intro-link">Explore training <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+</a>
+<a href="projects.html" class="home-intro-card">
+<span class="home-intro-icon"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i></span>
+<h3>See what's possible</h3>
+<p>Explore the ideas and experiences we've brought to life.</p>
+<span class="home-intro-link">See our work <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+</a>
+</div>
 </section>
 
 <!-- About Section -->
@@ -443,7 +477,7 @@ Our Projects
 </section>
 
 <!-- Projects Section -->
-<section class="projects page-hidden" id="projects">
+<section class="projects" id="projects">
 
 <div class="section-heading">
 <span class="eyebrow">Projects</span>
@@ -481,6 +515,15 @@ Our Projects
 <li>Blog section for published articles and firm updates</li>
 <li>Practice area pages and a structured contact/inquiry flow</li>
 </ul>
+</div>
+
+<div class="case-study-gallery">
+<img src="assets/case-studies/lxa-associates-hero.jpg" alt="LxA Associates homepage hero" loading="lazy">
+<img src="assets/case-studies/lxa-associates-practice-areas.jpg" alt="LxA Associates practice areas section" loading="lazy">
+<img src="assets/case-studies/lxa-associates-about.jpg" alt="LxA Associates about page" loading="lazy">
+<img src="assets/case-studies/lxa-associates-features.jpg" alt="LxA Associates features and testimonials" loading="lazy">
+<img src="assets/case-studies/lxa-associates-attorneys.jpg" alt="LxA Associates attorney profiles" loading="lazy">
+<img src="assets/case-studies/lxa-associates-blog.jpg" alt="LxA Associates blog page" loading="lazy">
 </div>
 
 </div>
@@ -873,16 +916,16 @@ Our Projects
 </div>
 
 <div class="footer-links">
-<a href="#home">Home</a>
-<a href="#about">About</a>
-<a href="#services">Services</a>
-<a href="#projects">Projects</a>
-<a href="#faq">FAQ</a>
-<a href="#contact">Contact</a>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="services.html">Services</a>
+<a href="projects.html">Projects</a>
+<a href="faq.html">FAQ</a>
+<a href="contact.html">Contact</a>
 </div>
 
 <div class="footer-copy">
-&copy; <span id="year"></span> LxA Nexus. All rights reserved. &middot; <a href="#privacy">Privacy Policy</a>
+&copy; <span id="year"></span> LxA Nexus. All rights reserved. &middot; <a href="privacy.html">Privacy Policy</a>
 </div>
 
 </div>

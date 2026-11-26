@@ -1,4 +1,4 @@
-// Loader
+﻿// Loader
 const loader = document.getElementById('loader');
 if (loader) {
   window.addEventListener('load', () => {
@@ -8,28 +8,35 @@ if (loader) {
 
 // Light / dark mode toggle
 // (initial theme is already set by the inline script in <head> to avoid a flash)
-const themeToggle = document.getElementById('theme-toggle');
+const themeToggleButtons = document.querySelectorAll('.theme-toggle-btn');
 const THEME_KEY = 'lxa-theme';
 
-if (themeToggle) {
+if (themeToggleButtons.length) {
   const themeColorMeta = document.getElementById('theme-color-meta');
 
-  const setThemeIcon = (theme) => {
-    const icon = themeToggle.querySelector('i');
-    if (!icon) return;
-    icon.classList.toggle('fa-sun', theme === 'light');
-    icon.classList.toggle('fa-moon', theme !== 'light');
+  const setThemeUI = (theme) => {
+    themeToggleButtons.forEach(btn => {
+      const icon = btn.querySelector('i');
+      if (icon) {
+        icon.classList.toggle('fa-sun', theme === 'light');
+        icon.classList.toggle('fa-moon', theme !== 'light');
+      }
+      const label = btn.querySelector('span');
+      if (label) label.textContent = theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode';
+    });
   };
 
-  setThemeIcon(document.documentElement.getAttribute('data-theme') || 'dark');
+  setThemeUI(document.documentElement.getAttribute('data-theme') || 'dark');
 
-  themeToggle.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-    const next = current === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem(THEME_KEY, next);
-    setThemeIcon(next);
-    if (themeColorMeta) themeColorMeta.setAttribute('content', next === 'light' ? '#FAFAF9' : '#050505');
+  themeToggleButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem(THEME_KEY, next);
+      setThemeUI(next);
+      if (themeColorMeta) themeColorMeta.setAttribute('content', next === 'light' ? '#f8faff' : '#171b28');
+    });
   });
 }
 
@@ -78,122 +85,89 @@ if (menuBtn && navbar && navLinks) {
   });
 }
 
-// Page-switching for About / Projects / Contact —
-// these open as standalone pages (everything else hidden, view resets to top).
-// Home, Services, and Process stay together as the main scrolling page.
-const MAIN_VIEW_IDS = ['home', 'services', 'training', 'process', 'testimonials', 'faq'];
-const STANDALONE_IDS = ['about', 'projects', 'contact', 'privacy'];
-const ALL_VIEW_IDS = [...MAIN_VIEW_IDS, ...STANDALONE_IDS];
+// Independent page navigation
+const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+const isProjectDetailPage = window.location.pathname.includes('/projects/');
 
-const showMainView = () => {
-  ALL_VIEW_IDS.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.toggle('page-hidden', !MAIN_VIEW_IDS.includes(id));
-  });
-  setFloatingCtaVisibility(true);
-  // The hero canvas may be stale if the window was resized while it was hidden.
-  window.dispatchEvent(new Event('resize'));
+const pageLinks = {
+  'index.html': 'home',
+  'about.html': 'about',
+  'services.html': 'services',
+  'training.html': 'training',
+  'process.html': 'process',
+  'projects.html': 'projects',
+  'faq.html': 'faq',
+  'contact.html': 'contact',
+  'privacy.html': 'privacy'
 };
 
-const setFloatingCtaVisibility = (visible) => {
-  const cta = document.querySelector('.floating-cta');
-  if (cta) cta.classList.toggle('page-hidden', !visible);
-};
+// On independent pages, enquiry buttons lead to the Contact page.
+// The homepage retains its existing enquiry modal.
+if (currentFile !== 'index.html') {
+  const replaceEnquiryButton = (id) => {
+    const button = document.getElementById(id);
+    if (!button) return;
 
-const showStandalonePage = (targetId) => {
-  ALL_VIEW_IDS.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.toggle('page-hidden', id !== targetId);
-  });
+    const link = document.createElement('a');
+    link.href = isProjectDetailPage ? '../contact.html' : 'contact.html';
+    link.className = button.className;
+    link.innerHTML = button.innerHTML;
 
-  // The Contact page already has its own Book Now / Call buttons — no need for the floating duplicate there.
-  setFloatingCtaVisibility(targetId !== 'contact');
+    const label = button.getAttribute('aria-label');
+    if (label) link.setAttribute('aria-label', label);
 
-  // Move focus to the new "page" so keyboard and screen-reader users land there too.
-  const target = document.getElementById(targetId);
-  if (target) {
-    target.setAttribute('tabindex', '-1');
-    target.focus({ preventScroll: true });
-  }
-};
+    button.replaceWith(link);
 
-// Normalize to the default view on load (HTML already encodes this via classes,
-// this just keeps things consistent if markup and script ever drift apart).
-showMainView();
-
-// If the page was loaded with a hash already in the URL (a bookmark, a shared link,
-// or a refresh while on a standalone page), route to it immediately instead of
-// silently falling back to the homepage.
-(function routeInitialHash() {
-  const initialId = window.location.hash.slice(1);
-  if (!initialId || !ALL_VIEW_IDS.includes(initialId)) return;
-
-  if (STANDALONE_IDS.includes(initialId)) {
-    showStandalonePage(initialId);
-    window.scrollTo(0, 0);
-  } else {
-    requestAnimationFrame(() => {
-      const target = document.getElementById(initialId);
-      if (target) target.scrollIntoView({ behavior: 'auto', block: 'start' });
-    });
-  }
-})();
-
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', (e) => {
-    const targetId = link.getAttribute('href').slice(1);
-    if (!ALL_VIEW_IDS.includes(targetId)) return;
-
-    e.preventDefault();
-
-    if (window.history && window.history.replaceState) {
-      window.history.replaceState(null, '', `#${targetId}`);
+    if (id === 'start-project-btn-mobile') {
+      link.addEventListener('click', closeMobileMenu);
     }
+  };
 
-    if (STANDALONE_IDS.includes(targetId)) {
-      showStandalonePage(targetId);
-      window.scrollTo(0, 0);
-    } else {
-      showMainView();
-      requestAnimationFrame(() => {
-        const target = document.getElementById(targetId);
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    }
-  });
-});
-
-// Active nav link on scroll
-const sections = document.querySelectorAll('section[id]');
-const navAnchors = document.querySelectorAll('.nav-links a');
-
-if (sections.length && navAnchors.length) {
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute('id');
-        navAnchors.forEach(a => {
-          a.classList.toggle('active', a.getAttribute('href') === `#${id}`);
-        });
-      }
-    });
-  }, { threshold: 0.4 });
-
-  sections.forEach(sec => sectionObserver.observe(sec));
+  replaceEnquiryButton('start-project-btn');
+  replaceEnquiryButton('start-project-btn-mobile');
 }
 
+// Highlight the current page in the navigation.
+const navAnchors = document.querySelectorAll('.nav-links a');
+
+if (currentFile !== 'index.html') {
+  const activePage = pageLinks[currentFile];
+
+  navAnchors.forEach(link => {
+    const href = link.getAttribute('href') || '';
+    const targetFile = href.split('#')[0];
+    const isCurrentPage = isProjectDetailPage
+      ? targetFile === '../projects.html'
+      : targetFile === currentFile;
+
+    link.classList.toggle('active', isCurrentPage);
+
+    if (isCurrentPage) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  });
+} else {
+  navAnchors.forEach(link => {
+    const isHome = link.getAttribute('href') === 'index.html';
+    link.classList.toggle('active', isHome);
+    if (isHome) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
+}
 // Footer year
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-// Shared "project form" logic — used by both the Contact section form
+// Shared "project form" logic â€” used by both the Contact section form
 // and the Start a Project modal form. They're two separate <form> elements
 // (different ids so they don't collide), wired up identically here.
 const BOOKING_EMAIL = 'acenobs@gmail.com';
 
 // Get a free access key at https://web3forms.com (just an email signup, no domain
 // verification needed) and paste it below. Until you do, submissions automatically
-// fall back to opening the visitor's email app instead — same as before.
+// fall back to opening the visitor's email app instead â€” same as before.
 const WEB3FORMS_ACCESS_KEY = '9fc1de5d-1586-4a6e-b0f7-18298ce7730c';
 
 // Service checkboxes reveal their own detail textarea when checked
@@ -203,6 +177,17 @@ document.querySelectorAll('.service-checkbox input[type="checkbox"]').forEach(ch
     if (option) option.classList.toggle('active', checkbox.checked);
   });
 });
+
+const requestedPackage = new URLSearchParams(window.location.search).get('package');
+if (currentFile === 'contact.html' && ['starter', 'frontend', 'fullstack', 'pro'].includes(requestedPackage)) {
+  const trainingCheckbox = document.getElementById('contact-svc-training');
+  const packageRadio = document.getElementById(`contact-pkg-${requestedPackage}`);
+  if (trainingCheckbox && packageRadio) {
+    trainingCheckbox.checked = true;
+    trainingCheckbox.dispatchEvent(new Event('change'));
+    packageRadio.checked = true;
+  }
+}
 
 function initProjectForm(formEl) {
   if (!formEl) return;
@@ -218,7 +203,7 @@ function initProjectForm(formEl) {
       successEl.hidden = false;
     } else if (statusEl) {
       statusEl.classList.remove('error');
-      statusEl.textContent = "Thanks — we'll get back to you within 24 hours to talk more.";
+      statusEl.textContent = "Thanks â€” we'll get back to you within 24 hours to talk more.";
     }
   };
 
@@ -293,7 +278,7 @@ function initProjectForm(formEl) {
 
     if (statusEl) statusEl.classList.remove('error');
 
-    // No access key set up yet — go straight to the mailto fallback rather than
+    // No access key set up yet â€” go straight to the mailto fallback rather than
     // firing a request that will just fail with a placeholder key.
     if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === 'YOUR_WEB3FORMS_ACCESS_KEY') {
       sendViaMailto(subject, body);
@@ -301,7 +286,7 @@ function initProjectForm(formEl) {
     }
 
     if (submitBtn) submitBtn.disabled = true;
-    if (statusEl) statusEl.textContent = 'Sending…';
+    if (statusEl) statusEl.textContent = 'Sendingâ€¦';
 
     fetch('https://api.web3forms.com/submit', {
       method: 'POST',
@@ -320,12 +305,12 @@ function initProjectForm(formEl) {
         if (data.success) {
           showSuccess();
         } else {
-          // Request reached Web3Forms but it rejected it — fall back rather than leave the visitor stuck.
+          // Request reached Web3Forms but it rejected it â€” fall back rather than leave the visitor stuck.
           sendViaMailto(subject, body);
         }
       })
       .catch(() => {
-        // Network error, blocked request, etc. — fall back to mailto so the visitor still has a path through.
+        // Network error, blocked request, etc. â€” fall back to mailto so the visitor still has a path through.
         if (submitBtn) submitBtn.disabled = false;
         sendViaMailto(subject, body);
       });
@@ -369,7 +354,7 @@ if (projectModal && (startProjectBtn || startProjectBtnMobile)) {
     if (e.key === 'Escape' && projectModal.classList.contains('open')) closeModal();
   });
 
-  // "Choose This Package" cards in the public Training showcase —
+  // "Choose This Package" cards in the public Training showcase â€”
   // pre-select the training service and that specific package, then open the modal.
   document.querySelectorAll('.choose-package-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -414,7 +399,7 @@ if (projectModal && (startProjectBtn || startProjectBtnMobile)) {
   function resize() {
     width = hero.offsetWidth;
     height = hero.offsetHeight;
-    if (!width || !height) return; // hero is hidden (e.g. on a standalone page) — skip until it's visible again
+    if (!width || !height) return; // hero is hidden (e.g. on a standalone page) â€” skip until it's visible again
     canvas.width = width * dpr;
     canvas.height = height * dpr;
     canvas.style.width = `${width}px`;
@@ -460,7 +445,7 @@ if (projectModal && (startProjectBtn || startProjectBtnMobile)) {
     }
 
     nodes.forEach(n => {
-      ctx.fillStyle = 'rgba(212,175,55,0.7)';
+      ctx.fillStyle = 'rgba(142,174,255,0.7)';
       ctx.beginPath();
       ctx.arc(n.x, n.y, 1.8, 0, Math.PI * 2);
       ctx.fill();
@@ -489,3 +474,4 @@ if (projectModal && (startProjectBtn || startProjectBtnMobile)) {
 
   visibilityObserver.observe(hero);
 })();
+

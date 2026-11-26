@@ -405,4 +405,44 @@
     .project-card-preview img {
         transition: none;
     }
+
+    /* Case studies use the same palette and rounded surfaces as the rest of the site. */
+    .project-detail-page > .project-detail-hero {
+        padding: 160px 0 70px;
+        background: radial-gradient(circle at 82% 18%, rgba(91, 131, 255, .2), transparent 38%), var(--bg);
+        border-color: var(--line);
+    }
+    .project-detail-intro, .project-back-link, .project-detail-meta span,
+    .project-content-main > p, .project-content-aside > p, .project-detail-bottom p,
+    .project-link-pending { color: var(--text-dim); }
+    .project-detail-meta, .project-content-grid, .project-feature-grid,
+    .project-feature-item { border-color: var(--line); }
+    .project-detail-symbol {
+        border-color: rgba(91, 131, 255, .35);
+        border-radius: 36px;
+        background: rgba(91, 131, 255, .12);
+    }
+    .project-content-aside, .project-detail-bottom {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--bg-card);
+    }
+    .project-feature-mark {
+        border-color: rgba(91, 131, 255, .35);
+        border-radius: 8px;
+    }
+    .project-tech-item {
+        border-color: var(--line);
+        border-radius: 999px;
+        background: var(--bg-card);
+    }
+    .project-gallery-grid figure { border-color: var(--line); border-radius: var(--radius); }
+    .project-card-preview { background: linear-gradient(145deg, #293d80, #1d2852); }
+    .project-card-visual { color: #c9d8ff; }
+    .project-card-expanded { padding: 0; }
+    .project-detail-link { color: var(--accent); }
+
+    @media (max-width: 760px) {
+        .project-detail-page > .project-detail-hero { padding: 135px 0 60px; }
+    }
 }

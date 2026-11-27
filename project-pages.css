@@ -1260,3 +1260,24 @@
         transition: none;
     }
 }
+
+.project-detail-page > .project-detail-hero {
+    --bg-card: #283136;
+    --text: #f8f7f3;
+    --text-dim: #c5d0cc;
+    --muted: #c5d0cc;
+    --gold: #ffbea9;
+    --accent: #ffbea9;
+    --line: rgba(235, 243, 240, .15);
+    color: var(--text);
+    background: radial-gradient(ellipse at 82% 18%, rgba(116, 173, 151, .17), transparent 38%), #1b2629;
+}
+.project-detail-heading h1,
+.project-content-main h2,
+.project-section-heading h2,
+.project-detail-bottom h2 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
+.project-detail-page > .project-detail-hero .btn.secondary {
+    background: #283136;
+    border-color: rgba(235, 243, 240, .2);
+    color: #f8f7f3;
+}

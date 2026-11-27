@@ -1688,3 +1688,58 @@ footer { background: var(--bg-alt); padding-top: 65px; padding-bottom: 45px; }
   .offering-back { margin-bottom: 32px; }
   .offering-page .nav-actions .theme-toggle { display: none; }
 }
+
+/* Editorial headings and warm, contrasting surfaces. */
+h1, h2 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  letter-spacing: -.035em;
+}
+.hero h1, .section-heading h2, .home-intro-heading h2,
+.contact-info h2, .offering-detail h1 { letter-spacing: -.035em; }
+h3 { letter-spacing: -.025em; }
+.eyebrow { font-size: .75rem; letter-spacing: .14em; }
+.section-heading p, .home-intro-heading p, .offering-lead { line-height: 1.8; }
+
+.home-intro {
+  background: #f7eee7;
+}
+[data-theme="dark"] .home-intro { background: #302833; }
+.training-showcase { background: #f8f2ed; }
+[data-theme="dark"] .training-showcase { background: #27242e; }
+
+.services, .testimonials, footer {
+  --bg-card: #283136;
+  --line: rgba(235, 243, 240, .15);
+  --text: #f8f7f3;
+  --text-dim: #c5d0cc;
+  --accent: #ffbea9;
+  --accent-2: #a7dacf;
+  --gold: #ffbea9;
+  --surface-tint: rgba(255, 255, 255, .06);
+  color: var(--text);
+  background: #1b2629;
+}
+.testimonials { background: #25232e; }
+footer { background: #171f21; }
+footer .tagline-primary { color: #ffbea9; }
+[data-theme="light"] footer img.theme-logo-dark { display: block; }
+[data-theme="light"] footer img.theme-logo-light { display: none; }
+
+.home-intro-card:nth-child(2) .home-intro-icon,
+.service-row:nth-child(2n) .service-body i,
+.project-card:nth-child(2n) .project-icon i { color: #a15a42; }
+.home-intro-card:nth-child(2) .home-intro-icon { background: #f7d8c8; }
+.home-intro-card:nth-child(3) .home-intro-icon { color: #31695d; background: #d3ebe2; }
+[data-theme="dark"] .home-intro-card:nth-child(2) .home-intro-icon { color: #ffbea9; background: rgba(255, 190, 169, .14); }
+[data-theme="dark"] .home-intro-card:nth-child(3) .home-intro-icon { color: #a7dacf; background: rgba(167, 218, 207, .14); }
+.services .service-row:nth-child(2n) .service-body i { color: #ffbea9; }
+.package-card:nth-child(1), .project-card:nth-child(3n + 1) { border-top: 3px solid #65ad9a; }
+.package-card:nth-child(2), .project-card:nth-child(3n + 2) { border-top: 3px solid #edaa8d; }
+.package-card:nth-child(3), .project-card:nth-child(3n) { border-top: 3px solid #aa96cb; }
+.package-card.featured { border-top: 3px solid #edaa8d; }
+.process-step:nth-child(2) .process-marker,
+.process-step:nth-child(4) .process-marker { background: rgba(223, 130, 101, .16); color: #a15139; }
+[data-theme="dark"] .process-step:nth-child(2) .process-marker,
+[data-theme="dark"] .process-step:nth-child(4) .process-marker { color: #ffbea9; }
+[data-theme="dark"] .project-card:nth-child(2n) .project-icon i { color: #ffbea9; }
